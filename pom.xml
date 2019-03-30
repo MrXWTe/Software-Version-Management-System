@@ -50,6 +50,7 @@
             <version>8.0.11</version>
         </dependency>
 
+        <!--jdbc驱动，使用jdbcTemplate-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
