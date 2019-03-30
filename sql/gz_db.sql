@@ -6,19 +6,19 @@
 -- SET FOREIGN_KEY_CHECKS=0;
 
 -- ---
--- Table 'administrator'
--- 管理员表，用于登录信息校验
+-- Table 'Administrator'
+-- 锟斤拷锟斤拷员锟斤拷锟斤拷锟节碉拷录锟斤拷息校锟斤拷
 -- ---
 
 DROP TABLE IF EXISTS `administrator`;
 		
 CREATE TABLE `administrator` (
-  `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
-  `admin_name` VARCHAR(32) NOT NULL COMMENT '管理员姓名',
-  `admin_email` VARCHAR(32) NOT NULL COMMENT '管理员邮箱，用于登录用户名',
-  `admin_password` VARCHAR(32) NOT NULL COMMENT '管理员密码，用于登录校验',
+  `id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '锟斤拷锟斤拷员ID',
+  `admin_name` VARCHAR(32) NOT NULL COMMENT '锟斤拷锟斤拷员锟斤拷锟斤拷',
+  `admin_email` VARCHAR(32) NOT NULL COMMENT '锟斤拷锟斤拷员锟斤拷锟戒，锟斤拷锟节碉拷录锟矫伙拷锟斤拷',
+  `admin_password` VARCHAR(32) NOT NULL COMMENT '锟斤拷锟斤拷员锟斤拷锟诫，锟斤拷锟节碉拷录校锟斤拷',
   PRIMARY KEY (`id`)
-) COMMENT '管理员表，用于登录信息校验';
+) COMMENT '锟斤拷锟斤拷员锟斤拷锟斤拷锟节碉拷录锟斤拷息校锟斤拷';
 
 -- ---
 -- Foreign Keys 
@@ -29,11 +29,11 @@ CREATE TABLE `administrator` (
 -- Table Properties
 -- ---
 
--- ALTER TABLE `administrator` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ALTER TABLE `Administrator` ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ---
 -- Test Data
 -- ---
 
--- INSERT INTO `administrator` (`id`,`admin_name`,`admin_email`,`admin_password`) VALUES
+-- INSERT INTO `Administrator` (`id`,`admin_name`,`admin_email`,`admin_password`) VALUES
 -- ('','','','');

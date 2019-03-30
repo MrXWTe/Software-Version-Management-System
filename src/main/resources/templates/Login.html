@@ -27,9 +27,9 @@
 <div class="log">
     <div class="content1">
         <h2>管理员登录</h2>
-        <form>
-            <input type="text" name="admin_id" value="用户名" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = 'USERNAME';}">
+        <form method="post" th:action="@{/loginTest}">
+            <input type="text" name="admin_email" value="邮箱" onfocus="this.value = '';"
+                   onblur="if (this.value == '') {this.value = 'EMAIL';}">
             <input type="password" name="admin_password" value="PASSWORD" onfocus="this.value = '';"
                    onblur="if (this.value == '') {this.value = 'PASSWORD';}">
             <div class="button-row">

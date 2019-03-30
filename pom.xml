@@ -19,11 +19,14 @@
     </properties>
 
     <dependencies>
+
+
         <!--web模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
 
         <!--test模块-->
         <dependency>
@@ -32,6 +35,7 @@
             <scope>test</scope>
         </dependency>
 
+
         <!--thymeleaf模板引擎模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,7 +43,19 @@
         </dependency>
 
 
+        <!--数据库驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
