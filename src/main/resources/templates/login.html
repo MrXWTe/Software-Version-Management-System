@@ -19,14 +19,16 @@
     <!-- /font files  -->
 
     <!-- css files -->
-    <link th:href="@{static/css/style.css}" rel='stylesheet' type='text/css' media="all"/>
+    <link th:href="@{static/login/css/style.css}" rel='stylesheet' type='text/css' media="all"/>
     <!-- /css files -->
 </head>
 <body>
-<h1>国志激光电控部</h1>
+<h1>电控部</h1>
 <div class="log">
     <div class="content1">
         <h2>管理员登录</h2>
+        <!--th:if determine if the p tag exists-->
+        <p style="color:red" th:text="${errorMessage}" th:if="${not #strings.isEmpty(errorMessage)}"></p>
         <form method="post" th:action="@{/loginTest}">
             <input type="text" name="admin_email" value="邮箱" onfocus="this.value = '';"
                    onblur="if (this.value == '') {this.value = 'EMAIL';}">
