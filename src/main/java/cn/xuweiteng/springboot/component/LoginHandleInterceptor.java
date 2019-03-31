@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Login check
+ * 登录检查
  */
 public class LoginHandleInterceptor implements HandlerInterceptor {
 
     /**
-     * before starting the target method
+     * 在方法执行前进行检查
      * @param request
      * @param response
      * @param handler
@@ -21,14 +21,14 @@ public class LoginHandleInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object email = request.getSession().getAttribute("admin_email");
-        if(email == null){
-            // did not login
+        Object loginAdmin = request.getSession().getAttribute("login_admin");
+        if(loginAdmin == null){
+            // 还未登录
             request.setAttribute("errorMessage", "还未登录");
-            request.getRequestDispatcher("/").forward(request, response);
+            request.getRequestDispatcher("/login.html").forward(request, response);
             return false;
         }else{
-            // login
+            // 已登陆
             return true;
         }
     }
