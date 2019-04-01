@@ -1,5 +1,6 @@
 package cn.xuweiteng.springboot.controller;
 
+import cn.xuweiteng.springboot.pojo.Administrator;
 import cn.xuweiteng.springboot.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,12 @@ public class LoginController {
     }
 */
 
+    private final LoginService loginService;
+
     @Autowired
-    private LoginService loginService;
+    public LoginController(LoginService service){
+        loginService = service;
+    }
 
     @PostMapping(value = "/loginTest")
     public String loginVerification(@RequestParam("admin_email") String admin_email,
@@ -29,10 +34,12 @@ public class LoginController {
                                     Map<String, Object> map,
                                     HttpSession session){
 
-        boolean flag = loginService.existAdmin(admin_email, admin_password);
+
+        Administrator admin = loginService.selectAdminByEmailAndPassword(admin_email, admin_password);
+        boolean flag = (admin != null);
         if(flag) {
-            session.setAttribute("login_admin", admin_email);
-            return "redirect:/background.html";
+            session.setAttribute("admin_name", admin.getAdmin_name());
+            return "redirect:/background-admin.html";
         }
         else {
             map.put("errorMessage", "用户名密码错误");

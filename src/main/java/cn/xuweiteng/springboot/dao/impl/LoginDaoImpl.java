@@ -31,4 +31,22 @@ public class LoginDaoImpl implements LoginDao {
             return false;
         return true;
     }
+
+
+    /**
+     * 根据admin_email和admin_email查询管理员对象
+     * @param admin_email 管理员emial
+     * @param admin_email 管理员密码
+     * @return 查询的Administrator对象
+     */
+    @Override
+    public Administrator selectAdminByEmailAndPassword(String admin_email, String admin_password) {
+        List<Administrator> admin = jdbcTemplate.query(
+                "select * from administrator where admin_email=? and admin_password=?",
+                new Object[]{admin_email, admin_password},
+                new BeanPropertyRowMapper<>(Administrator.class));
+        if(admin == null || admin.size() ==0)
+            return null;
+        return admin.get(0);
+    }
 }
