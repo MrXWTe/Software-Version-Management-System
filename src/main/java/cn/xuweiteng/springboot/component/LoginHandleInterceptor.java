@@ -21,7 +21,7 @@ public class LoginHandleInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object loginAdmin = request.getSession().getAttribute("login_admin");
+        Object loginAdmin = request.getSession().getAttribute("admin_name");
         if(loginAdmin == null){
             // 还未登录
             request.setAttribute("errorMessage", "还未登录");
