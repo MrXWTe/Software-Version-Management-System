@@ -151,9 +151,23 @@
                         <div class="row">
 
                             <!-- main col left -->
-                            <div class="col-sm-6">
+                            <div class="col-sm-6" th:each="software:${softwareList}">
 
                                 <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#" class="pull-right">All Versions</a>
+                                        <h4>[[${softwareList[1].softName}]]</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="list-group">
+                                            <a href="#" class="list-group-item">Information：[[${software.softInfo}]]</a>
+                                            <a href="#" class="list-group-item">Last Modified Date：[[${software.softLastmodifiedDate}]]</a>
+                                            <a href="#" class="list-group-item">Author：[[${software.softAuthor}]]</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--<div class="panel panel-default">
                                     <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
                                         Bootstrap
                                         Examples</h4></div>
@@ -164,51 +178,11 @@
                                             <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>-->
 
                             </div>
 
-                            <!-- main col right -->
-                            <div class="col-sm-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--/main col right-->
                         </div>
 
                         <div class="row" >
