@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>软件版本管理</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="css/bootstrap.min.css" th:href="@{/static/background/css/bootstrap.min.css}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="css/styles.css" th:href="@{/static/background/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- sidebar -->
+<div class="column col-sm-2 col-xs-1 sidebar-offcanvas " id="sidebar" th:fragment="side-bar">
+
+    <ul class="nav">
+        <li>
+            <a href="#" data-toggle="offcanvas" class="visible-xs text-center">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="nav  nav-pills nav-stacked  hidden-xs" id="lg-menu">
+        <li class="sidebar-brand">
+            <a><h4>管理员：[[${session.admin_name}]]</h4></a>
+        </li>
+
+        <li class="active">
+            <a href="#">
+                <i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;管理员信息
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="glyphicon glyphicon-list"></i>&nbsp;&nbsp;管理用户
+            </a>
+        </li>
+
+        <li>
+            <a href="#" th:href="@{/admin/background-admin-software/(currentPage=1 )}">
+                <i class="glyphicon glyphicon-paperclip"></i>&nbsp;&nbsp;管理软件
+            </a>
+        </li>
+
+        <!--<li>
+            <a href="#">
+                <i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;Refresh
+            </a>
+        </li>-->
+
+    </ul>
+
+    <ul class="list-unstyled hidden-xs" id="sidebar-footer">
+        <li>
+            <a href="#">
+                <h4>GZJG</h4>
+                <i class="glyphicon glyphicon-heart-empty"></i> 电控部
+            </a>
+        </li>
+    </ul>
+
+    <!-- tiny only nav-->
+    <ul class="nav visible-xs" id="xs-menu">
+        <li><a href="#featured" class="text-center"><i class="glyphicon glyphicon-list-alt"></i></a></li>
+        <li><a href="#stories" class="text-center"><i class="glyphicon glyphicon-list"></i></a></li>
+        <li><a href="#" class="text-center"><i class="glyphicon glyphicon-paperclip"></i></a></li>
+        <li><a href="#" class="text-center"><i class="glyphicon glyphicon-refresh"></i></a></li>
+    </ul>
+
+</div>
+<!-- /sidebar -->
+
+
+
+<!-- script references -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+</body>
+</html>
