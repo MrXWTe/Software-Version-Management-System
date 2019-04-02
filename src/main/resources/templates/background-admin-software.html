@@ -156,7 +156,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <a href="#" class="pull-right">All Versions</a>
-                                        <h4>[[${softwareList[1].softName}]]</h4>
+                                        <h4>[[${software.softName}]]</h4>
                                     </div>
                                     <div class="panel-body">
                                         <div class="list-group">
@@ -181,27 +181,78 @@
                                 </div>-->
 
                             </div>
-
-
                         </div>
 
+
+                        <!--分页-->
                         <div class="row" >
                             <div class="text-center">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
+                                <!--<nav aria-label="Page navigation example">
+                                    <ul class="pagination" th:switch="${pageNum}">
                                         <li class="page-item">
                                             <a class="page-link" href="#" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;</span>
                                             </a>
                                         </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item" th:each="page : ${#numbers.sequence(1,${pageNum})}">
+                                            <a class="page-link" href="background-admin-software?page=${page}"
+                                               th:href="@{/background-admin-software(page=${page} )}" th:text="${page}">1</a>
+                                        </li>
                                         <li class="page-item">
                                             <a class="page-link" href="#" aria-label="Next">
                                                 <span aria-hidden="true">&raquo;</span>
                                             </a>
                                         </li>
+                                    </ul>
+                                </nav>-->
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <li>
+                                            <div>
+                                                总条数：<span th:text="${totalNum}"></span>&nbsp;&nbsp;
+                                                总页数：<span th:text="${pageNum}"></span>&nbsp;&nbsp;
+                                                当前页码：<span th:text="${currentPage}"></span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/background-admin-software/(currentPage=1 )}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;首页</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a th:href="@{/admin/background-admin-software/(currentPage=${currentPage-1})}" th:if="${not #strings.equals(currentPage, '1')}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;上一页</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a th:href="@{/admin/background-admin-software/(currentPage=${currentPage+1})}" th:if="${not #strings.equals(currentPage, pageNum)}" aria-label="Next">
+                                                <span aria-hidden="true">下一页&raquo;</span>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a th:href="@{/admin/background-admin-software/(currentPage=${pageNum})}" aria-label="Next">
+                                                <span aria-hidden="true">尾页&raquo;</span>
+                                            </a>
+                                        </li>
+
+                                        <!--<li>
+                                            &lt;!&ndash; 调整pageSize start &ndash;&gt;
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text=" '每页显示:' + ${page.pageSize}">
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a th:href="@{/admin/background-admin-software/(currentPage=${currentPage},pageSize=5 )}">5</a></li>
+                                                    <li><a th:href="@{/admin/background-admin-software/(currentPage=${currentPage},pageSize=20 )}">10</a></li>
+                                                    <li><a th:href="@{/admin/background-admin-software/(currentPage=${currentPage},pageSize=50 )}">50</a></li>
+                                                    <li><a th:href="@{/admin/background-admin-software/(currentPage=${currentPage},pageSize=100 )}">100</a></li>
+                                                    <li><a th:href="@{/admin/background-admin-software/(currentPage=${currentPage},pageSize=500 )}">500</a></li>
+                                                </ul>
+                                            </div>
+                                            &lt;!&ndash; 调整pageSize结束 &ndash;&gt;
+                                        </li>-->
                                     </ul>
                                 </nav>
                             </div>

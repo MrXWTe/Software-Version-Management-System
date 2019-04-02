@@ -1,20 +1,18 @@
-package cn.xuweiteng.springboot.dao;
+package cn.xuweiteng.springboot.service;
 
 import cn.xuweiteng.springboot.pojo.Software;
 
 import java.util.List;
 
 /**
- * 主要是管理员操作的DAO
+ * 管理员操作的service
  */
-public interface AdminDao {
-
+public interface AdminService {
     /**
      * 查询所有软件
      * @return 软件集合
      */
     List<Software> selectAllSoftwares();
-
 
     /**
      * 查询软件数量

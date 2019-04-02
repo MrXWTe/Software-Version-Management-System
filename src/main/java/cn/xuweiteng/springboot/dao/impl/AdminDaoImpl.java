@@ -30,4 +30,25 @@ public class AdminDaoImpl implements AdminDao {
                 new BeanPropertyRowMapper<>(Software.class));
         return softwareList;
     }
+
+    /**
+     * 查询软件数量
+     * @return
+     */
+    public int selectCountOfSoftwares(){
+        return jdbcTemplate.queryForObject("select count(*) from tb_software", Integer.class);
+    }
+
+
+    public List<Software> selectSoftwaresByCurrentPage(int currentPage){
+        int startNum = (currentPage-1) * 4 + 1;
+        int endPage = 4;
+        String sql = "select soft_name as softName, " +
+                "soft_info as softInfo, soft_author as softAuthor, soft_last_modified_date as " +
+                "softLastModifiedDate from tb_software limit " + startNum + ", " + endPage;
+
+        List<Software> softwareList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Software.class));
+        return softwareList;
+    }
+
 }
