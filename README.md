@@ -1,3 +1,11 @@
+## 0、前述
+
+这篇文章主要用来记录写该系统时遇到的问题，以及解决方案
+
+***
+
+
+
 ## 1、在RestController中返回String值无法访问到html资源
 
 最开始我的代码是下面这样的：
@@ -182,5 +190,21 @@ public class WebMvcAutoConfiguration {...}
 
 
 
+## 6、JdbcTemplate下划线转驼峰问题
 
+下划线转驼峰是经常会遇到的问题，数据库字段命名一般都用下划线，比如`admin_name`，而pojo命名一般使用符合Java规范驼峰命名规则，如adminName。
+
+在使用MyBatis时，我们可以直接在主配置文件中配置如下语句，就可以愉快的进行自动映射了（这种配置是真的爽）。
+
+```xml
+<settings>
+    <setting name="mapUnderscoreToCamelCase" value="true" />
+</settings>
+```
+
+在spring boot使用JdbcTemplate时，我们可以通过写sql语句进行下划线转驼峰的映射
+
+```sql
+select soft_name as softName, soft_info as softInfo, soft_author as softAuthor, soft_last_modified_date as softLastModifiedDate from tb_software
+```
 
