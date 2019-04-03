@@ -19,3 +19,16 @@ CREATE TABLE `tb_software` (
   `soft_last_modified_date` DATETIME NOT NULL COMMENT '软件最后修改日期',
   PRIMARY KEY (`soft_id`)
 ) COMMENT '软件信息表';
+
+DROP TABLE IF EXISTS `tb_user`;
+
+CREATE TABLE `tb_user` (
+  `user_id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `user_name` VARCHAR(32) NOT NULL COMMENT '用户名',
+  `user_email` VARCHAR(32) NOT NULL COMMENT '用户email',
+  `user_password` VARCHAR(32) NOT NULL COMMENT '用户密码',
+  `user_enroll_date` DATE NOT NULL COMMENT '用户注册日期',
+  `user_status` TINYINT(1) NOT NULL COMMENT '用户状态-1表示在公司-0表示已离职',
+  PRIMARY KEY (`user_id`)
+) COMMENT '普通员工';
+

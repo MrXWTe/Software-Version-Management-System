@@ -2,6 +2,7 @@ package cn.xuweiteng.springboot.dao.impl;
 
 import cn.xuweiteng.springboot.dao.AdminDao;
 import cn.xuweiteng.springboot.pojo.Software;
+import cn.xuweiteng.springboot.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,13 +34,18 @@ public class AdminDaoImpl implements AdminDao {
 
     /**
      * 查询软件数量
-     * @return
+     * @return 软件总数
      */
     public int selectCountOfSoftwares(){
         return jdbcTemplate.queryForObject("select count(*) from tb_software", Integer.class);
     }
 
 
+    /**
+     * 根据当前页面查询软件列表
+     * @param currentPage 当前页面
+     * @return 当前页面需要显示的软件列表
+     */
     public List<Software> selectSoftwaresByCurrentPage(int currentPage){
         int startNum = (currentPage-1) * 4 + 1;
         int endPage = 4;
@@ -51,4 +57,14 @@ public class AdminDaoImpl implements AdminDao {
         return softwareList;
     }
 
+
+    /**
+     * 查询所有员工
+     * @return 员工列表
+     */
+    public List<User> selectAllUser(){
+        List<User> userList = jdbcTemplate.query("select * from tb_user",
+                new BeanPropertyRowMapper<>(User.class));
+        return userList;
+    }
 }

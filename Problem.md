@@ -199,3 +199,26 @@ public class WebMvcAutoConfiguration {...}
 select soft_name as softName, soft_info as softInfo, soft_author as softAuthor, soft_last_modified_date as softLastModifiedDate from tb_software
 ```
 
+
+
+## 7、mysql操作
+
+- 修改列属性
+
+  ```mysql
+  alter table table_name modify column column_name datetime not null;
+  ```
+
+- 
+
+
+
+## 8、跳转页面问题
+
+从`controller`跳转到其他页面时，**一定要确认跳转的页面没有用thyme leaf模板引擎获取其他参数**，否则就会报如下错误：
+
+```java
+An error happened during template parsing (template: "class path resource [templates//background-admin-user.html]"
+```
+
+看到这种错误就会一直以为自己的跳转路径是否有错，`controller`是跳转重定向问题还是内部转发问题，**一开始是真没想到跳转的页面用了模板引擎获取值**

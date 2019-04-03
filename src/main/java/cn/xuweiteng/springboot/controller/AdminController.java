@@ -1,6 +1,7 @@
 package cn.xuweiteng.springboot.controller;
 
 import cn.xuweiteng.springboot.pojo.Software;
+import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,21 @@ public class AdminController {
     private AdminService adminService;
 
     /**
+     *
+     * @return 返回展示员工列表页面
+     */
+    @GetMapping("/background-admin-user")
+    public String showUsers(Map<String, Object> map){
+        List<User> userList = adminService.selectAllUser();
+        map.put("userList", userList);
+        return "/background-admin-user.html";
+    }
+
+    /**
      * 展示软件列表页面
      *
-     * @param map
-     * @return
+     * @param map 用于存放返回数据
+     * @return string
      */
     @GetMapping("/background-admin-software")
     public String showSoftwarePage(Map<String, Object> map,
@@ -46,5 +58,11 @@ public class AdminController {
         map.put("pageNum", pageNum);
         map.put("currentPage", currentPage);
         return "/background-admin-software.html";
+    }
+
+
+    @GetMapping("/addUser")
+    public String addUser(){
+        return "success";
     }
 }
