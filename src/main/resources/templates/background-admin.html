@@ -6,12 +6,14 @@
     <title>软件版本管理</title>
     <meta name="generator" content="Bootply"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="css/bootstrap.min.css" th:href="@{/static/background/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/static/background/css/bootstrap.background.css}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="css/styles.css" th:href="@{/static/background/css/styles.css}" rel="stylesheet">
+    <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
 </head>
+
 <body>
 <div class="wrapper">
     <div class="box">
@@ -22,116 +24,61 @@
             <!--sidebar-->
 
             <!-- main right col -->
-            <div class="column col-sm-10 col-xs-11" id="main">
+            <div class="column col-md-10 col-xs-11" id="main">
 
                 <!--top-nav-->
                 <div th:replace="~{background-admin-top-nav::top-nav}"></div>
                 <!--top-nav-->
 
-                <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">企业网站模板</a></div>
                 <div class="padding">
                     <div class="full col-sm-9">
+                        <h2 class="text-primary">管理员个人信息</h2>
+                        <hr>
+                        <div class="col-md-8 ">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="text-muted">姓名</label>
+                                        <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                               required>
+                                    </div>
 
-                        <!-- content -->
-                        <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="email" class="text-muted">Email</label>
+                                        <input type="email" class="form-control" id="email"
+                                               placeholder="you@example.com">
 
-                            <!-- main col left -->
-                            <div class="col-sm-6">
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="address" class="text-muted">Address</label>
+                                        <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                                               required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="address2" class="text-muted">Address 2 </label>
+                                        <input type="text" class="form-control" id="address2"
+                                               placeholder="Apartment or suite">
                                     </div>
                                 </div>
-
-                            </div>
-
-                            <!-- main col right -->
-                            <div class="col-sm-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
-                                    </div>
+                                <hr>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary btn-sm btn-block" type="submit">修改个人信息</button>
                                 </div>
-
-                                <div class="panel panel-default">
-                                    <div class="panel-heading"><a href="#" class="pull-right">All Versions</a> <h4>
-                                        Bootstrap
-                                        Examples</h4></div>
-                                    <div class="panel-body">
-                                        <div class="list-group">
-                                            <a href="#tagged/modal" class="list-group-item">Modal / Dialog</a>
-                                            <a href="#tagged/datetime" class="list-group-item">Datetime Examples</a>
-                                            <a href="#tagged/datatable" class="list-group-item">Data Grids</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div><!--/main col right-->
+                            </form>
                         </div>
-
-                        <div class="row" >
-                            <div class="text-center">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-
-                        <div class="row" id="footer">
-                            <div class="text-center">
-                                <a href="#">©Copyright 2013. More Templates
-                                    <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a>-
-                                    Collect from
-                                    <a href="http://www.cssmoban.com/" target="_blank" title="网页模板">网页模板</a>
-                                </a>
-                            </div>
-                        </div>
-
                     </div>
+
+                    <!--footer-->
+                    <div th:replace="~{background-admin-footer.html::footer}"></div>
+
                 </div>
-                <!-- /main -->
-            </div>
+            </div><!-- /main -->
         </div>
     </div>
 </div>
