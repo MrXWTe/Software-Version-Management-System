@@ -34,4 +34,12 @@ public interface AdminService {
      * @return 员工列表
      */
     List<User> selectAllUser();
+
+
+    /**
+     * 根据ID删除用户
+     * @param userId 删除用户ID
+     * @return 改变的行号
+     */
+    int deleteUserById(Long userId);
 }

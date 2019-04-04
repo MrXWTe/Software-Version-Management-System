@@ -55,4 +55,15 @@ public class AdminServiceImpl implements AdminService {
     public List<User> selectAllUser() {
         return adminDao.selectAllUser();
     }
+
+
+    /**
+     * 根据ID删除用户
+     * @param userId 删除用户ID
+     * @return 改变的行号
+     */
+    @Override
+    public int deleteUserById(Long userId) {
+        return adminDao.deleteUserById(userId);
+    }
 }

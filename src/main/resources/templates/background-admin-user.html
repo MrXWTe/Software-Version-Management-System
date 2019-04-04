@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link th:href="@{/static/background/css/bootstrap.background.css}" rel="stylesheet">
     <!--[if lt IE 9]>
-    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
     <![endif]-->
     <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
@@ -29,6 +29,9 @@
                     <div class="full col-sm-9">
                         <h2 class="text-primary">管理员工信息</h2>
                         <hr>
+                        <div class="">
+                            <button class="btn btn-sm btn-primary">添加用户</button>
+                        </div>
                         <table class="table table-striped ">
                             <thead>
                             <tr>
@@ -37,6 +40,7 @@
                                 <th>userEmail</th>
                                 <th>userEnrollDate</th>
                                 <th>userStatus</th>
+                                <th>operation</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -46,127 +50,17 @@
                                 <td th:text="${user.userEmail}"></td>
                                 <td th:text="${user.userEnrollDate}"></td>
                                 <td th:text="${user.userStatus}"></td>
+                                <td>
+                                    <input type="submit" class="btn btn-sm btn-success" value="修改">
+                                    <button th:attr="del_uri=@{/admin/deleteUser/(userId=${user.userId})}"
+                                            class="btn btn-sm btn-danger deleteBtn">删除</button>
+                                </td>
                             </tr>
-
                             </tbody>
                         </table>
+                        <form id="deleteForm" method="post">
 
-                        <div class="pull-right">
-                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModalDelete">删除用户
-                            </button>
-                        </div>
-                        <div class="pull-right">
-                            <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModalUpdate">修改用户
-                            </button>&nbsp;&nbsp;
-                        </div>
-                        <div class="pull-right">
-                            <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModalAdd">添加用户
-                            </button>&nbsp;&nbsp;
-                        </div>
-
-                        <!--添加用户模态框-->
-                        <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-header row">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel-add">添加用户</h4>
-                                    </div>
-
-                                    <div class="modal-body row">
-                                        <form>
-                                            <div class="form-group col-md-6 col-md-offset-3">
-                                                <label for="userName-add" class="control-label">userName:</label>
-                                                <input type="text" class="form-control" id="userName-add" placeholder="用户名">
-                                            </div>
-                                            <div class="form-group col-md-6 col-md-offset-3">
-                                                <label for="userEmail-add" class="control-label">userEmail:</label>
-                                                <input type="text" class="form-control" id="userEmail-add" placeholder="邮箱">
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <div class="modal-footer row">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary">提交更改</button>
-                                    </div>
-
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal -->
-                        </div>
-
-                        <!--删除用户模态框-->
-                        <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-header row">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel-delete">删除用户</h4>
-                                    </div>
-
-                                    <div class="modal-body row">
-                                        <form>
-                                            <div class="form-group col-md-6 col-md-offset-3">
-                                                <label for="delete-id" class="control-label">userId:</label>
-                                                <input type="text" class="form-control" id="delete-id" placeholder="用户ID">
-                                            </div>
-
-                                        </form>
-                                    </div>
-
-                                    <div class="modal-footer row">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary">提交更改</button>
-                                    </div>
-
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal -->
-                        </div>
-
-
-                        <!--更新用户模态框-->
-                        <div class="modal fade" id="myModalUpdate" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-header row">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="gridSystemModalLabel-update">更新用户</h4>
-                                    </div>
-
-                                    <div class="modal-body row">
-                                        <form>
-                                            <div class="form-group col-md-6 col-md-offset-3">
-                                                <label for="update-name" class="control-label">userName:</label>
-                                                <input type="text" class="form-control" id="update-name" placeholder="用户名">
-                                            </div>
-                                            <div class="form-group col-md-6 col-md-offset-3">
-                                                <label for="update-email" class="control-label">userEmail:</label>
-                                                <input type="text" class="form-control" id="update-email" placeholder="用户email">
-                                            </div>
-                                            <div class="form-group col-md-6 col-md-offset-3">
-                                                <label for="update-status" class="control-label">userStatus:</label>
-                                                <input type="text" class="form-control" id="update-status" placeholder="用户状态">
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <div class="modal-footer row">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                                        <button type="button" class="btn btn-primary">提交更改</button>
-                                    </div>
-
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal -->
-                        </div>
+                        </form>
 
                         <!--footer-->
                         <div th:replace="~{background-admin-footer.html::footer}"></div><!--footer-->
@@ -176,12 +70,16 @@
         </div>
     </div>
 </div>
-
-<!-- script references -->
-<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
-<script th:src="@{/static/background/js/scripts.js}"></script>
-
+<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/static/background/js/scripts.js}"></script>
+<script>
+    $(".deleteBtn").click(function () {
+        var r = confirm("确认是否删除该用户");
+        if(r == true) {
+            $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
+        }
+    });
+</script>
 </body>
 </html>

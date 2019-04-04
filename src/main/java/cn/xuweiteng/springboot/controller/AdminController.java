@@ -6,6 +6,7 @@ import cn.xuweiteng.springboot.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -64,5 +65,19 @@ public class AdminController {
     @GetMapping("/addUser")
     public String addUser(){
         return "success";
+    }
+
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") String userId,
+                             Map<String, Object> map){
+        Long user_id = Long.parseLong(userId);
+        int row = adminService.deleteUserById(user_id);
+        if(row>0){
+            List<User> userList = adminService.selectAllUser();
+            map.put("userList", userList);
+            return "/background-admin-user.html";
+        }
+        return "error";
     }
 }

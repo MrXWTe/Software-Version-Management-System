@@ -67,4 +67,15 @@ public class AdminDaoImpl implements AdminDao {
                 new BeanPropertyRowMapper<>(User.class));
         return userList;
     }
+
+
+    /**
+     * 根据ID删除用户
+     * @param userId 删除用户ID
+     * @return 改变的行号
+     */
+    @Override
+    public int deleteUserById(Long userId){
+        return jdbcTemplate.update("delete from tb_user where user_id=?", userId);
+    }
 }
