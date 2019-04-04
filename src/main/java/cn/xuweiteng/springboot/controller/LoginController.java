@@ -4,6 +4,7 @@ import cn.xuweiteng.springboot.pojo.Administrator;
 import cn.xuweiteng.springboot.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,5 +46,12 @@ public class LoginController {
             map.put("errorMessage", "用户名密码错误");
             return "login";
         }
+    }
+
+
+    @GetMapping("/logout")
+    public String logOut(HttpSession session){
+        session.invalidate();
+        return "login.html";
     }
 }

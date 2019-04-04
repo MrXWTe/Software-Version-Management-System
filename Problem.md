@@ -222,3 +222,86 @@ An error happened during template parsing (template: "class path resource [templ
 ```
 
 看到这种错误就会一直以为自己的跳转路径是否有错，`controller`是跳转重定向问题还是内部转发问题，**一开始是真没想到跳转的页面用了模板引擎获取值**
+
+
+
+## 9、删除用户碰到的问题
+
+我在显示用户列表时使用的thyme leaf模板引擎中的`th:each`标签，每一条记录的最右边包含修改和删除按钮，单机删除按钮即可删除记录。具体html代码如下：
+
+```html
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>userId</th>
+            <th>userName</th>
+            <th>userEmail</th>
+            <th>userEnrollDate</th>
+            <th>userStatus</th>
+            <th>operation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.userId}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.userEmail}"></td>
+            <td th:text="${user.userEnrollDate}"></td>
+            <td th:text="${user.userStatus}"></td>
+            <td>
+                <input type="submit" class="btn btn-sm btn-success" value="修改"> 
+                <form th:action="@{/admin/deleteUser/(userId=${user.userId}}" 								  method="get">
+                	<button class="btn btn-sm btn-danger deleteBtn">删除</button>    
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+```
+
+**在这里的`button`中如果直接使用`form`表单包含起来，这样不但会使得渲染后的页面达不到预期的效果，并且使得整体页面过于臃肿**。
+
+因此，推荐使用如下方法
+
+```html
+<table class="table table-striped ">
+    <thead>
+        <tr>
+            <th>userId</th>
+            <th>userName</th>
+            <th>userEmail</th>
+            <th>userEnrollDate</th>
+            <th>userStatus</th>
+            <th>operation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.userId}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.userEmail}"></td>
+            <td th:text="${user.userEnrollDate}"></td>
+            <td th:text="${user.userStatus}"></td>
+            <td>
+                <input type="submit" class="btn btn-sm btn-success" value="修改"> 
+                <button th:attr="del_uri=@{/admin/deleteUser/(userId=${user.userId})}"
+                        class="btn btn-sm btn-danger deleteBtn">删除</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<form id="deleteForm" method="post"> </form>
+<script>
+    $(".deleteBtn").click(function () {
+        var r = confirm("确认是否删除该用户");
+        if(r == true) {
+            $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
+        }
+    });
+</script>
+```
+
+这里用JS定义按钮的单击事件，并且用一个`confirm`进行二次确认，以免误删。然后获取表单id号，用.attr()方法设置`action`属性为`$(this).attr("del_uri")`。
+
+这里有个小技巧，使用thyme leaf模板引擎中的`th:attr`标签可以自定义html标签属性，`th:attr="del_uri=@{/admin/deleteUser/(userId=${user.userId})}"`，该语句便定义了del_uri属性为跳转的URL，因此删除功能就能够完成了。
