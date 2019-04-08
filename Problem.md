@@ -305,3 +305,39 @@ An error happened during template parsing (template: "class path resource [templ
 这里用JS定义按钮的单击事件，并且用一个`confirm`进行二次确认，以免误删。然后获取表单id号，用.attr()方法设置`action`属性为`$(this).attr("del_uri")`。
 
 这里有个小技巧，使用thyme leaf模板引擎中的`th:attr`标签可以自定义html标签属性，`th:attr="del_uri=@{/admin/deleteUser/(userId=${user.userId})}"`，该语句便定义了del_uri属性为跳转的URL，因此删除功能就能够完成了。
+
+
+
+## 10、前后端数据传送的日期转换问题
+
+#### 1）、前端传后端
+
+问：前端传输的日期数据一般是String形式的，如何转换成pojo中的Date形式？
+
+在相关字段上使用JsonFormat注解
+
+```java
+@JsonFormat(pattern = “yyyy-MM-dd HH:mm:ss”, timezone = “GMT+8”) 
+private Date time;
+```
+
+#### 2)、后端传前端
+
+问：后端传输的日期数据一般是时间戳形式的，如何以指定的形式返回？
+
+解决一：直接在`application.properties`中进行全局配置，**但这种方法会使得全局使用该配置**
+
+```properties
+spring.jackson.time-zone=GMT+8
+spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
+```
+
+解决二：在相关字段上使用JsonFormat注解
+
+```java
+@JsonFormat(pattern = “yyyy-MM-dd HH:mm:ss”, timezone = “GMT+8”) 
+private Date time;
+```
+
+
+

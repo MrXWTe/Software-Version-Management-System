@@ -58,6 +58,17 @@ public class AdminServiceImpl implements AdminService {
 
 
     /**
+     * 根据用户ID查询单个用户
+     * @param userId 待查询的用户ID
+     * @return 用户
+     */
+    @Override
+    public User selectUserById(Long userId) {
+        return adminDao.selectUserById(userId);
+    }
+
+
+    /**
      * 根据ID删除用户
      * @param userId 删除用户ID
      * @return 改变的行号
@@ -76,5 +87,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int addUser(User user) {
         return adminDao.addUser(user);
+    }
+
+
+    @Override
+    public int updateUser(User user) {
+        return adminDao.updateUser(user);
     }
 }

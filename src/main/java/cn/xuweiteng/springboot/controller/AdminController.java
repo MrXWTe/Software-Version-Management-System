@@ -5,10 +5,8 @@ import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -85,6 +83,38 @@ public class AdminController {
     @PostMapping("/addUser")
     public String addUser(User user, Map<String, Object> map){
         int row = adminService.addUser(user);
+        if(row > 0){
+            List<User> userList = adminService.selectAllUser();
+            map.put("userList", userList);
+            return "/background-admin-user.html";
+        }else{
+            return "error";
+        }
+    }
+
+
+    /**
+     * 跳转到编辑页面
+     * @return 编辑页面
+     */
+    @GetMapping("/updateUserPage/{userId}")
+    public String updateUserPage(@PathVariable ("userId") Long userId, Model model){
+        User user = adminService.selectUserById(userId);
+        model.addAttribute("user", user);
+        return "background-admin-user-update";
+    }
+
+
+    /**
+     * 编辑用户操作
+     * @param user
+     * @param map
+     * @return
+     */
+    @PostMapping("/updateUser/{userId}")
+    public String updateUser(User user, @PathVariable("userId") Long userId, Map<String, Object> map){
+        user.setUserId(userId);
+        int row = adminService.updateUser(user);
         if(row > 0){
             List<User> userList = adminService.selectAllUser();
             map.put("userList", userList);

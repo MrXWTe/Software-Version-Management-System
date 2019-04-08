@@ -34,10 +34,28 @@ public interface AdminService {
 
 
     /**
-     * 查询所有员工
+     * 查询所有用户
      * @return 员工列表
      */
     List<User> selectAllUser();
+
+
+    /**
+     * 根据用户ID查询单个用户
+     * @param userId 待查询的用户ID
+     * @return 用户
+     */
+    User selectUserById(Long userId);
+
+
+    /**
+     * 添加用户
+     * @param user 添加的用户
+     * @return 改变的行数
+     */
+    int addUser(User user);
+
+
 
 
     /**
@@ -49,9 +67,10 @@ public interface AdminService {
 
 
     /**
-     * 添加用户
-     * @param user 添加的用户
+     * 更新用户
+     * @param user 更新的用户
      * @return 改变的行数
      */
-    int addUser(User user);
+    int updateUser(User user);
+
 }

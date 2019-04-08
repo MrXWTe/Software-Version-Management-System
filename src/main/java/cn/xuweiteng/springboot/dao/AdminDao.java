@@ -52,4 +52,20 @@ public interface AdminDao {
      * @return 改变的行数
      */
     int addUser(User user);
+
+
+    /**
+     * 根据用户ID查询单个用户
+     * @param userId 待查询的用户ID
+     * @return 用户
+     */
+    User selectUserById(Long userId);
+
+
+    /**
+     * 更新用户
+     * @param user 更新的用户
+     * @return 改变的行数
+     */
+    int updateUser(User user);
 }

@@ -53,7 +53,9 @@
                                 <td th:text="${user.userEnrollDate}"></td>
                                 <td th:text="${user.userStatus}"></td>
                                 <td>
-                                    <input type="submit" class="btn btn-sm btn-success" value="修改">
+                                    <a type="button" th:href="@{/admin/updateUserPage/}+${user.userId}"
+                                       class="btn btn-sm btn-success">编辑</a>
+
                                     <button th:attr="del_uri=@{/admin/deleteUser/(userId=${user.userId})}"
                                             class="btn btn-sm btn-danger deleteBtn">删除</button>
                                 </td>
