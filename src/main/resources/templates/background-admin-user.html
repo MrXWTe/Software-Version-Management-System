@@ -30,7 +30,9 @@
                         <h2 class="text-primary">管理员工信息</h2>
                         <hr>
                         <div class="">
-                            <button class="btn btn-sm btn-primary">添加用户</button>
+                            <form th:action="@{/admin/addUserPage}" method="get">
+                                <input type="submit" class="btn btn-sm btn-primary" value="添加用户" />
+                            </form>
                         </div>
                         <table class="table table-striped ">
                             <thead>

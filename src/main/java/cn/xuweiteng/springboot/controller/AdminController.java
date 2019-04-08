@@ -23,7 +23,9 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+
     /**
+     * 跳转到员工列表页面
      *
      * @return 返回展示员工列表页面
      */
@@ -34,8 +36,9 @@ public class AdminController {
         return "/background-admin-user.html";
     }
 
+
     /**
-     * 展示软件列表页面
+     * 跳转到展示软件列表页面
      *
      * @param map 用于存放返回数据
      * @return string
@@ -62,12 +65,42 @@ public class AdminController {
     }
 
 
-    @GetMapping("/addUser")
-    public String addUser(){
-        return "success";
+    /**
+     * 跳转到添加用户页面
+     *
+     * @return 返回添加用户页面
+     */
+    @GetMapping("/addUserPage")
+    public String addUserPage(){
+        return "background-admin-user-add";
     }
 
 
+    /**
+     * 添加用户操作
+     *
+     * @param user 自动映射的user
+     * @return 返回用户列表页面
+     */
+    @PostMapping("/addUser")
+    public String addUser(User user, Map<String, Object> map){
+        int row = adminService.addUser(user);
+        if(row > 0){
+            List<User> userList = adminService.selectAllUser();
+            map.put("userList", userList);
+            return "/background-admin-user.html";
+        }else{
+            return "error";
+        }
+    }
+
+
+    /**
+     * 删除用户操作
+     * @param userId
+     * @param map
+     * @return
+     */
     @PostMapping("/deleteUser")
     public String deleteUser(@RequestParam("userId") String userId,
                              Map<String, Object> map){
@@ -80,4 +113,5 @@ public class AdminController {
         }
         return "error";
     }
+
 }

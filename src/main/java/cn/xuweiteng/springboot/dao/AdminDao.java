@@ -44,4 +44,12 @@ public interface AdminDao {
      * @return 改变的行号
      */
     int deleteUserById(Long userId);
+
+
+    /**
+     * 添加用户
+     * @param user 添加的用户
+     * @return 改变的行数
+     */
+    int addUser(User user);
 }

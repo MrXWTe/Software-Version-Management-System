@@ -66,4 +66,15 @@ public class AdminServiceImpl implements AdminService {
     public int deleteUserById(Long userId) {
         return adminDao.deleteUserById(userId);
     }
+
+
+    /**
+     * 添加用户
+     * @param user 添加的用户
+     * @return 改变的行数
+     */
+    @Override
+    public int addUser(User user) {
+        return adminDao.addUser(user);
+    }
 }

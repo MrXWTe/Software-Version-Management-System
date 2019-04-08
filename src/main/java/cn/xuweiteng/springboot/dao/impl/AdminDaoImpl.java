@@ -19,6 +19,7 @@ public class AdminDaoImpl implements AdminDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+
     /**
      * 查询所有软件
      * @return 软件集合
@@ -31,6 +32,7 @@ public class AdminDaoImpl implements AdminDao {
                 new BeanPropertyRowMapper<>(Software.class));
         return softwareList;
     }
+
 
     /**
      * 查询软件数量
@@ -77,5 +79,18 @@ public class AdminDaoImpl implements AdminDao {
     @Override
     public int deleteUserById(Long userId){
         return jdbcTemplate.update("delete from tb_user where user_id=?", userId);
+    }
+
+
+    /**
+     * 添加用户
+     * @param user 添加的用户
+     * @return 改变的行数
+     */
+    @Override
+    public int addUser(User user) {
+        return jdbcTemplate.update(
+                "insert into tb_user (user_name, user_email, user_password,user_enroll_date, user_status) values (?, ?, ?, ?, ?)",
+                new Object[] {user.getUserName(), user.getUserEmail(), "123456",  user.getUserEnrollDate(), user.isUserStatus()});
     }
 }
