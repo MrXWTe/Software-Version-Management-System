@@ -32,3 +32,13 @@ CREATE TABLE `tb_user` (
   PRIMARY KEY (`user_id`)
 ) COMMENT '普通员工';
 
+DROP TABLE IF EXISTS `tb_softwareversion`;
+
+CREATE TABLE `tb_version` (
+  `sv_id` INTEGER NOT NULL AUTO_INCREMENT COMMENT '用于主键',
+  `sv_info` MEDIUMTEXT NOT NULL COMMENT '软件版本的信息',
+  `sv_link` VARCHAR(50) NOT NULL COMMENT '软件版本的下载链接',
+  `soft_version_id` INTEGER NOT NULL COMMENT '外键，对应软件ID',
+  PRIMARY KEY (`sv_id`),
+  CONSTRAINT `FK_ID` FOREIGN KEY (`soft_version_id`) REFERENCES `tb_software` (`soft_id`)
+) COMMENT '软件版本表';

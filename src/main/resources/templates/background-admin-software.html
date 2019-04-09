@@ -43,14 +43,14 @@
 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <a href="#" class="pull-right">All Versions</a>
+                                        <a th:href="@{/admin/softwareVersionList/}+${software.softId}" class="pull-right">All Versions</a>
                                         <h4>[[${software.softName}]]</h4>
                                     </div>
                                     <div class="panel-body">
                                         <div class="list-group">
-                                            <a href="#" class="list-group-item">Information：[[${software.softInfo}]]</a>
-                                            <a href="#" class="list-group-item">Last Modified Date：[[${software.softLastmodifiedDate}]]</a>
-                                            <a href="#" class="list-group-item">Author：[[${software.softAuthor}]]</a>
+                                            <a class="list-group-item">Information：[[${software.softInfo}]]</a>
+                                            <a class="list-group-item">Last Modified Date：[[${software.softLastmodifiedDate}]]</a>
+                                            <a class="list-group-item">Author：[[${software.softAuthor}]]</a>
                                         </div>
                                     </div>
                                 </div>

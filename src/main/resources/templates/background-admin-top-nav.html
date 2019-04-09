@@ -28,7 +28,7 @@
     <a class="navbar-brand logo">GZ</a>
 </div>
 <nav class="collapse navbar-collapse" role="navigation">
-    <form class="navbar-form navbar-left">
+    <form class="navbar-form navbar-left" th:if="${1==0}">
         <div class="input-group input-group-sm" style="max-width:360px;">
             <input type="text" class="form-control" placeholder="Search" name="srch-term"
                    id="srch-term">
@@ -43,12 +43,11 @@
         <li>
             <a th:href="@{/background-admin.html}"><i class="glyphicon glyphicon-home"></i> Home</a>
         </li>
-        <li>
-            <a href="#postModal" role="button" data-toggle="modal"><i
-                    class="glyphicon glyphicon-plus"></i> Post</a>
+        <li th:if="${softId != null}">
+            <a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;<span class="badge"> Beta</span></a>
         </li>
-        <li>
-            <a href="#"><span class="badge">badge</span></a>
+        <li th:if="${softId != null}">
+            <a href="#"><i class="glyphicon glyphicon-check"></i>&nbsp;<span class="badge">release</span></a>
         </li>
     </ul>
 

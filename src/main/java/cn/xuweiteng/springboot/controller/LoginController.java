@@ -14,29 +14,28 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-/*
-    //在MyMvcConfig配置了资源访问映射，因此不需要该方法了
-    @RequestMapping(value = {"/", "/login.html"})
-    public String login(){
-        return "login";
-    }
-*/
-
     private final LoginService loginService;
-
     @Autowired
     public LoginController(LoginService service){
         loginService = service;
     }
 
+
+    /**
+     * 管理员登录操作
+     * @param admin_email 管理员email
+     * @param admin_password 管理员密码
+     * @param map 登录错误后需要此map存储信息
+     * @param session 登录成功需要向该session 存入信息
+     * @return 后台页面
+     */
     @PostMapping(value = "/loginTest")
     public String loginVerification(@RequestParam("admin_email") String admin_email,
                                     @RequestParam("admin_password") String admin_password,
                                     Map<String, Object> map,
                                     HttpSession session){
-
-
-        Administrator admin = loginService.selectAdminByEmailAndPassword(admin_email, admin_password);
+        Administrator admin = loginService.selectAdminByEmailAndPassword(
+                admin_email, admin_password);
         boolean flag = (admin != null);
         if(flag) {
             session.setAttribute("admin", admin);
@@ -49,6 +48,11 @@ public class LoginController {
     }
 
 
+    /**
+     * 退出登录操作
+     * @param session 清空的session
+     * @return 登录页面
+     */
     @GetMapping("/logout")
     public String logOut(HttpSession session){
         session.invalidate();

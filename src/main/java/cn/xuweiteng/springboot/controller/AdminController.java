@@ -2,9 +2,9 @@ package cn.xuweiteng.springboot.controller;
 
 import cn.xuweiteng.springboot.pojo.Administrator;
 import cn.xuweiteng.springboot.pojo.Software;
+import cn.xuweiteng.springboot.pojo.SoftwareVersions;
 import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.AdminService;
-import cn.xuweiteng.springboot.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -123,7 +123,8 @@ public class AdminController {
      * @return
      */
     @PostMapping("/updateUser/{userId}")
-    public String updateUser(User user, @PathVariable("userId") Long userId, Map<String, Object> map){
+    public String updateUser(User user, @PathVariable("userId") Long userId,
+                             Map<String, Object> map){
         user.setUserId(userId);
         int row = adminService.updateUser(user);
         if(row > 0){
@@ -184,6 +185,24 @@ public class AdminController {
         map.put("pageNum", pageNum);
         map.put("currentPage", currentPage);
         return "/background-admin-software.html";
+    }
+
+
+    /**
+     * 显示指定ID的所有版本软件
+     * @param id 指定的软件ID
+     * @param model 用于存储信息
+     * @return 显示版本列表页面
+     */
+    @GetMapping("/softwareVersionList/{softId}")
+    public String showSoftWareVersionList(@PathVariable("softId") Long id, Model model){
+        List<SoftwareVersions> versionList = adminService.selectAllVersionIdByFkId(id);
+        List<Software> softwareList = adminService.selectSoftwareById(id);//为了获取软件名字
+
+        model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
+        model.addAttribute("softName", softwareList.get(0).getSoftName());
+        model.addAttribute("versionList", versionList);
+        return "background-admin-software-versions";
     }
 
 
