@@ -28,14 +28,15 @@
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">编辑用户信息</h2>
+                        <h2 class="text-primary">编辑员工信息</h2>
                         <hr>
 
                         <form method="post" th:action="@{/admin/updateUser/}+${user.getUserId()}">
                             <label for="basic-addon1">用户名</label>
                             <div class="input-group ">
                                 <span class="input-group-addon" id="basic-addon1">@name</span>
-                                <input type="text" name="userName" th:value="${user.getUserName()}" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+                                <input type="text" name="userName" th:value="${user.getUserName()}"
+                                       class="form-control" placeholder="Username" aria-describedby="basic-addon1" required>
                             </div>
 
                             <br>
@@ -43,7 +44,8 @@
                             <label for="basic-addon2">用户 Email</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon2">@gz.com</span>
-                                <input type="text" name="userEmail" th:value="${user.getUserEmail()}" class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+                                <input type="text" name="userEmail" th:value="${user.getUserEmail()}"
+                                       class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2" required>
                             </div>
 
                             <br>
@@ -51,7 +53,8 @@
                             <label for="basic-addon3">用户注册时间</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon3">@yyyy-MM-dd hh:mm:ss</span>
-                                <input type="text" name="userEnrollDate" th:value="${user.getUserEnrollDate()}" class="form-control" placeholder="1997-01-01 10:30:25" aria-label="Amount (to the nearest dollar)">
+                                <input type="text" name="userEnrollDate" th:value="${user.getUserEnrollDate()}"
+                                       class="form-control" placeholder="1997-01-01 10:30:25" aria-label="Amount (to the nearest dollar)" required>
                             </div>
 
                             <br>
@@ -59,7 +62,8 @@
                             <label for="basic-addon4">用户状态</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon4">@true/false:1/0</span>
-                                <input type="text" name="userStatus" th:value="${user.isUserStatus()} ? 1 : 0" class="form-control" placeholder="1:stay;0:leave" aria-describedby="basic-addon3">
+                                <input type="text" name="userStatus" th:value="${user.isUserStatus()} ? 1 : 0"
+                                       class="form-control" placeholder="1:stay;0:leave" aria-describedby="basic-addon3" required>
                             </div>
 
                             <br>

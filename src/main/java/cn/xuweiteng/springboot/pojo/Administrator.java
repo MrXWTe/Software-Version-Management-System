@@ -7,6 +7,15 @@ public class Administrator implements Serializable {
     private String admin_name;
     private String admin_email;
     private String admin_password;
+    private Boolean final_admin;
+
+    public Boolean getFinal_admin() {
+        return final_admin;
+    }
+
+    public void setFinal_admin(Boolean final_admin) {
+        this.final_admin = final_admin;
+    }
 
     public Long getAdmin_id() {
         return admin_id;
@@ -48,6 +57,7 @@ public class Administrator implements Serializable {
                 ", admin_name='" + admin_name + '\'' +
                 ", admin_email='" + admin_email + '\'' +
                 ", admin_password='" + admin_password + '\'' +
+                ", final_admin=" + final_admin +
                 '}';
     }
 }

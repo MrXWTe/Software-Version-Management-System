@@ -32,46 +32,53 @@
 
                 <div class="padding">
                     <div class="full col-sm-9">
-                            <h2 class="text-primary">管理员个人信息</h2>
-                            <hr>
-                        <div class="col-md-8 ">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="text-muted">姓名</label>
-                                        <input type="text" class="form-control" id="firstName" placeholder="" value=""
-                                               required>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <label for="email" class="text-muted">Email</label>
-                                        <input type="email" class="form-control" id="email"
-                                               placeholder="you@example.com">
+                        <h2 class="text-primary">管理员个人信息</h2>
+                        <hr>
 
-                                    </div>
-                                </div>
-
-
-
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="address" class="text-muted">Address</label>
-                                        <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                                               required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="address2" class="text-muted">Address 2 </label>
-                                        <input type="text" class="form-control" id="address2"
-                                               placeholder="Apartment or suite">
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="col-md-6">
-                                    <button class="btn btn-primary btn-sm btn-block" type="submit">修改个人信息</button>
-                                </div>
-                            </form>
+                        <label for="basic-addon0">管理员工号</label>
+                        <div class="input-group ">
+                            <span class="input-group-addon" id="basic-addon0">@id</span>
+                            <input type="text" name="userId" th:value="${session.admin.admin_id}"
+                                   class="form-control" placeholder="Admin ID" aria-describedby="basic-addon0" required>
                         </div>
+
+                        <br>
+
+                        <form method="get" th:action="@{/admin/updateAdminPage}">
+                            <label for="basic-addon1">管理员姓名</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon" id="basic-addon1">@name</span>
+                                <input type="text" name="userName" class="form-control" th:value="${session.admin.admin_name}"
+                                       placeholder="Username" aria-describedby="basic-addon1" required>
+                            </div>
+
+                            <br>
+
+                            <label for="basic-addon2">管理员 Email</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon2">@gz.com</span>
+                                <input type="text" name="userEmail" class="form-control" th:value="${session.admin.admin_email}"
+                                       placeholder="xxx@gz.com" aria-describedby="basic-addon2" required>
+                            </div>
+
+                            <br>
+
+                            <label for="basic-addon3">是否为最终管理员</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon3">@true/false;1/0</span>
+                                <input type="text" name="userEnrollDate" class="form-control" th:value="${session.admin.final_admin}"
+                                       placeholder="1:yes;0:no" aria-label="Amount (to the nearest dollar)" required>
+                            </div>
+
+                            <br>
+
+                            <div>
+                                <button class="btn btn-primary" type="submit">修改个人信息</button>
+                            </div>
+
+                        </form>
+
                     </div>
 
                     <!--footer-->
@@ -84,7 +91,7 @@
 </div>
 <!-- script references -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
-<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/background/js/scripts.js}"></script>
 </body>
 </html>

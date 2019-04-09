@@ -39,7 +39,7 @@ public class LoginController {
         Administrator admin = loginService.selectAdminByEmailAndPassword(admin_email, admin_password);
         boolean flag = (admin != null);
         if(flag) {
-            session.setAttribute("admin_name", admin.getAdmin_name());
+            session.setAttribute("admin", admin);
             return "redirect:/background-admin.html";
         }
         else {

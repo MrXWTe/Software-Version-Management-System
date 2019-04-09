@@ -1,6 +1,7 @@
 package cn.xuweiteng.springboot.service.impl;
 
 import cn.xuweiteng.springboot.dao.AdminDao;
+import cn.xuweiteng.springboot.pojo.Administrator;
 import cn.xuweiteng.springboot.pojo.Software;
 import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.AdminService;
@@ -90,8 +91,36 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
+    /**
+     * 更新用户
+     * @param user 更新的用户
+     * @return 改变的行数
+     */
     @Override
     public int updateUser(User user) {
         return adminDao.updateUser(user);
+    }
+
+
+    /**
+     * 更新管理员
+     * @param admin 更新的管理员
+     * @return 改变的行数
+     */
+    @Override
+    public int updateAdmin(Administrator admin) {
+        return adminDao.updateAdmin(admin);
+    }
+
+
+    /**
+     * 根据admin_email和admin_email查询管理员对象
+     * @param admin_email 管理员emial
+     * @param admin_email 管理员密码
+     * @return 查询的Administrator对象
+     */
+    @Override
+    public Administrator selectAdminByEmailAndPassword(String admin_email, String admin_password) {
+        return adminDao.selectAdminByEmailAndPassword(admin_email, admin_password);
     }
 }

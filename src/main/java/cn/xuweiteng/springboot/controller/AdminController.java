@@ -1,13 +1,16 @@
 package cn.xuweiteng.springboot.controller;
 
+import cn.xuweiteng.springboot.pojo.Administrator;
 import cn.xuweiteng.springboot.pojo.Software;
 import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.AdminService;
+import cn.xuweiteng.springboot.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +26,43 @@ public class AdminController {
 
 
     /**
-     * 跳转到员工列表页面
+     * 跳转到编辑管理员信息页面
+     *
+     * @return 编辑管理员信息页面
+     */
+    @GetMapping("/updateAdminPage")
+    public String updateAdminPage(){
+        return "background-admin-update";
+    }
+
+
+    /**
+     * 编辑管理员信息操作
+     * @param admin 编辑的管理员
+     * @param id 编辑的管理员ID
+     * @return 管理员信息页面
+     */
+    @PostMapping("/updateAdmin/{admin_id}")
+    public String updateAdmin(Administrator admin,
+                              @PathVariable("admin_id") Long id,
+                              HttpSession session){
+        admin.setAdmin_id(id);
+        int row = adminService.updateAdmin(admin);
+        if(row > 0){
+            Administrator adminModified = adminService.selectAdminByEmailAndPassword(
+                    admin.getAdmin_email(), admin.getAdmin_password());
+            session.setAttribute("admin", adminModified);
+            return "redirect:/background-admin.html";
+        }else{
+            return "error";
+        }
+    }
+
+
+    /********************************用户操作************************************/
+
+    /**
+     * 跳转到用户列表页面
      *
      * @return 返回展示员工列表页面
      */
@@ -32,34 +71,6 @@ public class AdminController {
         List<User> userList = adminService.selectAllUser();
         map.put("userList", userList);
         return "/background-admin-user.html";
-    }
-
-
-    /**
-     * 跳转到展示软件列表页面
-     *
-     * @param map 用于存放返回数据
-     * @return string
-     */
-    @GetMapping("/background-admin-software")
-    public String showSoftwarePage(Map<String, Object> map,
-                                   @RequestParam("currentPage") String currentPageString) {
-        // 当前页面
-        int currentPage = Integer.parseInt(currentPageString);
-
-        // 获取软件列表
-        List<Software> softwareList = adminService.selectSoftwaresByCurrentPage(currentPage);
-        map.put("softwareList", softwareList);
-
-        // 获取软件数量
-        int totalNum = adminService.selectCountOfSoftwares();
-        int pageNum = totalNum % 4 == 0 ? totalNum / 4 : totalNum / 4 + 1;
-
-
-        map.put("totalNum", totalNum);
-        map.put("pageNum", pageNum);
-        map.put("currentPage", currentPage);
-        return "/background-admin-software.html";
     }
 
 
@@ -94,7 +105,7 @@ public class AdminController {
 
 
     /**
-     * 跳转到编辑页面
+     * 跳转到编辑用户页面
      * @return 编辑页面
      */
     @GetMapping("/updateUserPage/{userId}")
@@ -143,5 +154,37 @@ public class AdminController {
         }
         return "error";
     }
+
+
+
+    /*******************************软件操作****************************************/
+
+    /**
+     * 跳转到展示软件列表页面
+     *
+     * @param map 用于存放返回数据
+     * @return string
+     */
+    @GetMapping("/background-admin-software")
+    public String showSoftwarePage(Map<String, Object> map,
+                                   @RequestParam("currentPage") String currentPageString) {
+        // 当前页面
+        int currentPage = Integer.parseInt(currentPageString);
+
+        // 获取软件列表
+        List<Software> softwareList = adminService.selectSoftwaresByCurrentPage(currentPage);
+        map.put("softwareList", softwareList);
+
+        // 获取软件数量
+        int totalNum = adminService.selectCountOfSoftwares();
+        int pageNum = totalNum % 4 == 0 ? totalNum / 4 : totalNum / 4 + 1;
+
+
+        map.put("totalNum", totalNum);
+        map.put("pageNum", pageNum);
+        map.put("currentPage", currentPage);
+        return "/background-admin-software.html";
+    }
+
 
 }
