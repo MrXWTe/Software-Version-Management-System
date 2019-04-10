@@ -212,15 +212,33 @@ public class AdminDaoImpl implements AdminDao {
     }
 
 
-
+    /**
+     * 查找指定svId的版本信息
+     * @param svId 指定id
+     * @return 版本列表
+     */
     @Override
     public List<SoftwareVersions> selectVersionBetaBySvId(Long svId) {
-        String sql = "select sv_info as svInfo, sv_link as svLink, sv_versionId as svVersionId, " +
-                "sv_version as svVersion, soft_name as softName from tb_version" +
-                "inter join tb_software on soft_version_id=soft_id where sv_id=?";
+        String sql = "select sv_id as svId, sv_info as svInfo, sv_link as svLink, sv_versionId as svVersionId, " +
+                "sv_version as svVersion, soft_version_id as softVersionId from tb_version" +
+                " inter join tb_software on soft_version_id=soft_id where sv_id=?";
 
-        List<SoftwareVersions> versionList =  jdbcTemplate.query(sql, new Object[] {svId},
+        List<SoftwareVersions> versionList = jdbcTemplate.query(sql, new Object[] {svId},
                 new BeanPropertyRowMapper<>(SoftwareVersions.class));
         return versionList;
     }
+
+
+    /**
+     * 更新软件版本 信息
+     * @param softwareVersions 更新的信息
+     * @return 改变的行数
+     */
+    @Override
+    public int updateVersionBeta(SoftwareVersions softwareVersions) {
+        String sql = "update tb_version set sv_info=?, sv_versionId=? where sv_id=?";
+        return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
+                softwareVersions.getSvVersionId(), softwareVersions.getSvId()});
+    }
+
 }

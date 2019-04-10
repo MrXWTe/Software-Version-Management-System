@@ -271,12 +271,62 @@ public class AdminController {
     }
 
 
+    /**
+     * 跳转到软件详细信息界面
+     * @param svId 版本ID
+     * @param model 用于存储转发信息
+     * @return 软件详细信息界面
+     */
     @GetMapping("showVersionDetail/{svId}")
-    public String showVersionDetail(@PathVariable("svId") Long svId){
+    public String showVersionDetail(@PathVariable("svId") Long svId, Model model){
         List<SoftwareVersions> versions = adminService.selectVersionBetaBySvId(svId);
         if(versions!=null && versions.size()>0){
-            System.out.println(versions.get(0));
+            String info = versions.get(0).getSvInfo();
+            String[] infos = info.split(";");
+            StringBuffer sb = new StringBuffer();
+            for(String information : infos){
+                sb.append(information);
+                sb.append(";");
+                sb.append("\r\n");
+            }
+            versions.get(0).setSvInfo(sb.toString());
+            model.addAttribute("version", versions.get(0));
+
+            List<Software> softwareList = adminService.
+                    selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
+            model.addAttribute("softName", softwareList.get(0).getSoftName());
+
         }
         return "background-admin-software-version-details";
+    }
+
+
+    @PostMapping("/updateSoftwareDetails/{svId}")
+    public String updateSoftwareDetails(@PathVariable("svId") Long svId,
+                                        SoftwareVersions softwareVersions, Model model){
+        softwareVersions.setSvId(svId);
+        int row = adminService.updateVersionBeta(softwareVersions);
+        if(row > 0){
+            List<SoftwareVersions> versions = adminService.selectVersionBetaBySvId(svId);
+            if(versions!=null && versions.size()>0){
+                String info = versions.get(0).getSvInfo();
+                String[] infos = info.split(";");
+                StringBuffer sb = new StringBuffer();
+                for(String information : infos){
+                    sb.append(information);
+                    sb.append(";");
+                    sb.append("\r\n");
+                }
+                versions.get(0).setSvInfo(sb.toString());
+                model.addAttribute("version", versions.get(0));
+
+                List<Software> softwareList = adminService.
+                        selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
+                model.addAttribute("softName", softwareList.get(0).getSoftName());
+            }
+            return "background-admin-software-version-details";
+        }else{
+            return "error";
+        }
     }
 }

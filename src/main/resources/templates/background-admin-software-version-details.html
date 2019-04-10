@@ -31,10 +31,51 @@
                 <div th:replace="~{background-admin-top-nav::top-nav}"></div>
                 <!--top-nav-->
 
-                <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">企业网站模板</a></div>
                 <div class="padding">
                     <div class="full col-sm-9">
 
+                        <div class="col-md-4 pull-right" style="margin-right: 70px">
+                            <div class="thumbnail">
+                                <div class="caption">
+                                    <img th:src="@{/static/background/images/insignia.svg}" width="40" height="50">
+                                    <span class="text-muted">
+                                        SoftWare Name: <i>[[${softName}]]</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+
+                            <form role="form" method="post" th:action="@{/admin/updateSoftwareDetails/}+${version.svId}">
+                                <label for="basic-addon1">版本号</label>
+                                <div class="input-group ">
+                                    <span class="input-group-addon" id="basic-addon1">@version id</span>
+                                    <input type="text" name="svVersionId" class="form-control" th:value="${version.svVersionId}"
+                                           placeholder="versionId" aria-describedby="basic-addon1">
+                                </div>
+
+                                <br>
+
+                                <!-- 单选 -->
+                                <label>详细信息</label>
+                                <div class="form-group">
+                                    <textarea readonly name="svInfo" id="textInfo" cols="30" rows="10" class="form-control" th:text="${version.svInfo}"></textarea>
+                                </div>
+
+
+                                <input type="submit" class="btn btn-primary pull-right" value="确认修改">
+                            </form>
+
+                            <button onclick="edit()" class="btn btn-success">编辑信息</button>
+                        </div>
+
+                        <!--单击 编辑信息 按钮，激活富文本框-->
+                        <script type="text/javascript">
+                            function edit(){
+                                document.getElementById('textInfo').removeAttribute('readonly');
+                            }
+                        </script>
 
                         <!--footer-->
                         <div th:replace="~{background-admin-footer.html::footer}"></div>
@@ -50,5 +91,6 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
 <script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+
 </body>
 </html>

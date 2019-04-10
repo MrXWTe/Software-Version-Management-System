@@ -129,4 +129,12 @@ public interface AdminService {
      */
     List<SoftwareVersions> selectVersionBetaBySvId(Long svId);
 
+
+    /**
+     * 更新软件版本 信息
+     * @param softwareVersions 更新的信息
+     * @return 改变的行数
+     */
+    int updateVersionBeta(SoftwareVersions softwareVersions);
+
 }

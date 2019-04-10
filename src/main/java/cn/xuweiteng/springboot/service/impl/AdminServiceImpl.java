@@ -172,4 +172,15 @@ public class AdminServiceImpl implements AdminService {
     public List<SoftwareVersions> selectVersionBetaBySvId(Long svId) {
         return adminDao.selectVersionBetaBySvId(svId);
     }
+
+
+    /**
+     * 更新软件版本 信息
+     * @param softwareVersions 更新的信息
+     * @return 改变的行数
+     */
+    @Override
+    public int updateVersionBeta(SoftwareVersions softwareVersions) {
+        return adminDao.updateVersionBeta(softwareVersions);
+    }
 }

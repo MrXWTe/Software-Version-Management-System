@@ -12,8 +12,6 @@ public class SoftwareVersions {
     private String svVersionId;
     private Long svVersion;
 
-    private Software software;
-
     public Long getSvId() {
         return svId;
     }
@@ -62,13 +60,6 @@ public class SoftwareVersions {
         this.svVersion = svVersion;
     }
 
-    public Software getSoftware() {
-        return software;
-    }
-
-    public void setSoftware(Software software) {
-        this.software = software;
-    }
 
     @Override
     public String toString() {
@@ -79,7 +70,6 @@ public class SoftwareVersions {
                 ", softVersionId=" + softVersionId +
                 ", svVersionId='" + svVersionId + '\'' +
                 ", svVersion=" + svVersion +
-                ", software=" + software +
                 '}';
     }
 }
