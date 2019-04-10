@@ -1,12 +1,18 @@
 package cn.xuweiteng.springboot.pojo;
 
 public class SoftwareVersions {
+
+    public SoftwareVersions() {
+    }
+
     private Long svId;
     private String svInfo;
     private String svLink;
     private Long softVersionId;
     private String svVersionId;
     private Long svVersion;
+
+    private Software software;
 
     public Long getSvId() {
         return svId;
@@ -56,6 +62,14 @@ public class SoftwareVersions {
         this.svVersion = svVersion;
     }
 
+    public Software getSoftware() {
+        return software;
+    }
+
+    public void setSoftware(Software software) {
+        this.software = software;
+    }
+
     @Override
     public String toString() {
         return "SoftwareVersions{" +
@@ -65,6 +79,7 @@ public class SoftwareVersions {
                 ", softVersionId=" + softVersionId +
                 ", svVersionId='" + svVersionId + '\'' +
                 ", svVersion=" + svVersion +
+                ", software=" + software +
                 '}';
     }
 }

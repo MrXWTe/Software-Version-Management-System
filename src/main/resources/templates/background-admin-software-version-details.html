@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>软件版本管理</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link th:href="@{/static/background/css/bootstrap.background.css}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+    <div class="box">
+        <div class="row">
+
+
+            <!--sidebar-->
+            <div th:replace="~{background-admin-side-bar::side-bar}"></div>
+            <!--sidebar-->
+
+
+            <!-- main right col -->
+            <div class="column col-sm-10 col-xs-11" id="main">
+
+
+                <!--top-nav-->
+                <div th:replace="~{background-admin-top-nav::top-nav}"></div>
+                <!--top-nav-->
+
+                <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">企业网站模板</a></div>
+                <div class="padding">
+                    <div class="full col-sm-9">
+
+
+                        <!--footer-->
+                        <div th:replace="~{background-admin-footer.html::footer}"></div>
+
+                    </div>
+                </div>
+                <!-- /main -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- script references -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+</body>
+</html>

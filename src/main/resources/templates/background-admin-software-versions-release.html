@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>软件版本管理</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link th:href="@{/static/background/css/bootstrap.background.css}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="wrapper">
+    <div class="box">
+        <div class="row">
+
+
+            <!--sidebar-->
+            <div th:replace="~{background-admin-side-bar::side-bar}"></div>
+            <!--sidebar-->
+
+
+            <!-- main right col -->
+            <div class="column col-sm-10 col-xs-11" id="main">
+
+
+                <!--top-nav-->
+                <div th:replace="~{background-admin-top-nav::top-nav}"></div>
+                <!--top-nav-->
+
+                <div class="padding">
+                    <div class="full col-sm-9">
+                        <div class="col-md-4 pull-right" style="margin-right: 70px">
+                            <div class="thumbnail">
+
+                                <div class="caption">
+                                    <img th:src="@{/static/background/images/insignia.svg}" width="40" height="50">
+                                    <span class="text-muted">
+                                        SoftWare Name: <i>[[${softName}]]</i>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="thumbnail">
+                                <div class="caption">
+                                    <h2 class="row text-info" style="margin-top:30px">All versions of a piece of software</h2>
+                                    <hr class="center-pi" style="margin-top: 10px">
+
+                                    <ul class="justify-content-center" th:each="version : ${versionReleaseList}">
+                                        <li class="text-primary">
+                                            <a class="nav-link active text-primary" href="#" >
+                                                [[${version.getSvVersionId()}]] <i>（Release）</i>
+                                            </a>
+
+                                            <a class="nav-link active text-primary"
+                                               th:href="@{/admin/downloadBetaVersionSoftware/}+${version.svLink}">
+                                                download
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <!--footer-->
+                        <div th:replace="~{background-admin-footer.html::footer}"></div>
+
+                    </div>
+                </div>
+                <!-- /main -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- script references -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/background/js/scripts.js}"></script>
+</body>
+</html>

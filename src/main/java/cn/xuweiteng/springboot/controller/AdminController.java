@@ -10,7 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -189,21 +193,90 @@ public class AdminController {
 
 
     /**
-     * 显示指定ID的所有版本软件
+     * 显示指定ID的所有  测试版本  软件
      * @param id 指定的软件ID
      * @param model 用于存储信息
      * @return 显示版本列表页面
      */
-    @GetMapping("/softwareVersionList/{softId}")
-    public String showSoftWareVersionList(@PathVariable("softId") Long id, Model model){
-        List<SoftwareVersions> versionList = adminService.selectAllVersionIdByFkId(id);
+    @GetMapping("/softwareVersionBetaList/{softId}")
+    public String showSoftWareVersionBetaList(@PathVariable("softId") Long id, Model model){
+        List<SoftwareVersions> versionBetaList = adminService.selectAllVersionBetaIdByFkId(id);
         List<Software> softwareList = adminService.selectSoftwareById(id);//为了获取软件名字
 
         model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
         model.addAttribute("softName", softwareList.get(0).getSoftName());
-        model.addAttribute("versionList", versionList);
-        return "background-admin-software-versions";
+        model.addAttribute("versionBetaList", versionBetaList);
+        return "background-admin-software-versions-beta";
     }
 
 
+    /**
+     * 显示指定ID的所有  发机版本  软件
+     * @param id 指定的软件ID
+     * @param model 用于存储信息
+     * @return 显示版本列表页面
+     */
+    @GetMapping("/softwareVersionReleaseList/{softId}")
+    public String showSoftWareVersionReleaseList(@PathVariable("softId") Long id, Model model){
+        List<SoftwareVersions> versionReleaseList = adminService.selectAllVersionReleaseIdByFkId(id);
+        List<Software> softwareList = adminService.selectSoftwareById(id);//为了获取软件名字
+
+        model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
+        model.addAttribute("softName", softwareList.get(0).getSoftName());
+        model.addAttribute("versionReleaseList", versionReleaseList);
+        return "background-admin-software-versions-release";
+    }
+
+
+    /**
+     * 下载软件
+     * @param link 软件所在地址
+     * @param request 请求信息
+     * @param response 响应信息
+     * @return null(当前页面)
+     * @throws Exception 文件不存在异常
+     */
+    @GetMapping("/downloadBetaVersionSoftware/{link}")
+    public String downLoadBetaVersion(@PathVariable("link") String link,
+                                      HttpServletRequest request,
+                                      HttpServletResponse response) throws Exception{
+        System.out.println(link);
+        File srcFileDir = new File(link);
+        String fileName = "1.txt";
+        File file = new File(srcFileDir, fileName);
+        if(file.exists()){
+            // 配置文件下载
+            response.setHeader("content-type", "application/octet-stream");
+            response.setContentType("application/octet-stream");
+            // 下载文件能正常显示中文
+            response.setHeader("Content-Disposition", "attachment;filename="
+                            + URLEncoder.encode(fileName, "UTF-8"));
+
+            byte[] buffer = new byte[1024];
+            try(BufferedInputStream bis =
+                        new BufferedInputStream(new FileInputStream(file));
+                OutputStream os = response.getOutputStream()){
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    os.write(buffer, 0, i);
+                    i = bis.read(buffer);
+                }
+                System.out.println("Download the song successfully!");
+            }
+            catch (Exception e) {
+                System.out.println("Download the song failed!");
+            }
+        }
+        return null;
+    }
+
+
+    @GetMapping("showVersionDetail/{svId}")
+    public String showVersionDetail(@PathVariable("svId") Long svId){
+        List<SoftwareVersions> versions = adminService.selectVersionBetaBySvId(svId);
+        if(versions!=null && versions.size()>0){
+            System.out.println(versions.get(0));
+        }
+        return "background-admin-software-version-details";
+    }
 }

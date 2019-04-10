@@ -183,14 +183,43 @@ public class AdminDaoImpl implements AdminDao {
 
 
     /**
-     * 查找指定软件的所有版本号
-     * @param id 指定的软件ID
+     * 查找指定软件的所有  测试版本  号
+     * @param softVersionId 指定的软件ID
      * @return 指定软件的所有版本的ID
      */
     @Override
-    public List<SoftwareVersions> selectAllVersionIdByFkId(Long id) {
-        String sql = "select sv_versionId as svVersionId from tb_version where soft_version_id=?";
-        List<SoftwareVersions> versionList = jdbcTemplate.query(sql, new Object[]{id},
+    public List<SoftwareVersions> selectAllVersionBetaIdByFkId(Long softVersionId) {
+        String sql = "select sv_id as svId, sv_versionId as svVersionId, sv_link as svLink from tb_version where soft_version_id=? and sv_version=?";
+        List<SoftwareVersions> versionList = jdbcTemplate.query(sql, new Object[]{softVersionId, 0},//0 代表测试版
+                new BeanPropertyRowMapper<>(SoftwareVersions.class));
+        return versionList;
+    }
+
+
+    /**
+     * 查找指定软件的所有  发机版本  号
+     * @param softVersionId 指定的软件ID
+     * @return 指定软件的所有版本的ID
+     */
+    @Override
+    public List<SoftwareVersions> selectAllVersionReleaseIdByFkId(Long softVersionId) {
+        String sql = "select sv_id as svId, sv_versionId as svVersionId, sv_link as svLink from tb_version " +
+                "where soft_version_id=? and sv_version=?";
+
+        List<SoftwareVersions> versionList = jdbcTemplate.query(sql, new Object[]{softVersionId, 1}, //1 代表发机版
+                new BeanPropertyRowMapper<>(SoftwareVersions.class));
+        return versionList;
+    }
+
+
+
+    @Override
+    public List<SoftwareVersions> selectVersionBetaBySvId(Long svId) {
+        String sql = "select sv_info as svInfo, sv_link as svLink, sv_versionId as svVersionId, " +
+                "sv_version as svVersion, soft_name as softName from tb_version" +
+                "inter join tb_software on soft_version_id=soft_id where sv_id=?";
+
+        List<SoftwareVersions> versionList =  jdbcTemplate.query(sql, new Object[] {svId},
                 new BeanPropertyRowMapper<>(SoftwareVersions.class));
         return versionList;
     }

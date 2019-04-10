@@ -44,10 +44,10 @@
             <a th:href="@{/background-admin.html}"><i class="glyphicon glyphicon-home"></i> Home</a>
         </li>
         <li th:if="${softId != null}">
-            <a href="#"><i class="glyphicon glyphicon-edit"></i>&nbsp;<span class="badge"> Beta</span></a>
+            <a th:href="@{/admin/softwareVersionBetaList/}+${softId}"><i class="glyphicon glyphicon-edit"></i>&nbsp;<span class="badge"> Beta</span></a>
         </li>
         <li th:if="${softId != null}">
-            <a href="#"><i class="glyphicon glyphicon-check"></i>&nbsp;<span class="badge">release</span></a>
+            <a th:href="@{/admin/softwareVersionReleaseList/}+${softId}"><i class="glyphicon glyphicon-check"></i>&nbsp;<span class="badge">release</span></a>
         </li>
     </ul>
 

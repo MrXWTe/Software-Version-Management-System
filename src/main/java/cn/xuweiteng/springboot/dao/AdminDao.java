@@ -106,9 +106,25 @@ public interface AdminDao {
 
 
     /**
-     * 查找指定软件的所有版本号
-     * @param id 指定的软件ID
+     * 查找指定软件的所有  测试版本  版本号
+     * @param softVersionId 指定的软件ID
      * @return 指定软件的所有版本的ID
      */
-    List<SoftwareVersions> selectAllVersionIdByFkId(Long id);
+    List<SoftwareVersions> selectAllVersionBetaIdByFkId(Long softVersionId);
+
+
+    /**
+     * 查找指定软件的所有  发机版本  版本号
+     * @param softVersionId 指定的软件ID
+     * @return 指定软件的所有版本的ID
+     */
+    List<SoftwareVersions> selectAllVersionReleaseIdByFkId(Long softVersionId);
+
+
+    /**
+     * 查找指定svId的版本
+     * @param svId 指定id
+     * @return 版本列表
+     */
+    List<SoftwareVersions> selectVersionBetaBySvId(Long svId);
 }

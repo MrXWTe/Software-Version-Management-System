@@ -142,12 +142,34 @@ public class AdminServiceImpl implements AdminService {
 
 
     /**
-     * 查找指定软件的所有版本号
+     * 查找指定软件的所有  测试版本  版本号
      * @param id 指定的软件ID
      * @return 指定软件的所有版本的ID
      */
     @Override
-    public List<SoftwareVersions> selectAllVersionIdByFkId(Long id) {
-        return adminDao.selectAllVersionIdByFkId(id);
+    public List<SoftwareVersions> selectAllVersionBetaIdByFkId(Long id) {
+        return adminDao.selectAllVersionBetaIdByFkId(id);
+    }
+
+
+    /**
+     * 查找指定软件的所有  发机版本  版本号
+     * @param id 指定的软件ID
+     * @return 指定软件的所有版本的ID
+     */
+    @Override
+    public List<SoftwareVersions> selectAllVersionReleaseIdByFkId(Long id) {
+        return adminDao.selectAllVersionReleaseIdByFkId(id);
+    }
+
+
+    /**
+     * 查找指定svId的版本
+     * @param svId 指定id
+     * @return 版本列表
+     */
+    @Override
+    public List<SoftwareVersions> selectVersionBetaBySvId(Long svId) {
+        return adminDao.selectVersionBetaBySvId(svId);
     }
 }

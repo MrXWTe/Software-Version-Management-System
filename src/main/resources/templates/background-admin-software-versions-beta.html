@@ -53,10 +53,15 @@
                                     <h2 class="row text-info" style="margin-top:30px">All versions of a piece of software</h2>
                                     <hr class="center-pi" style="margin-top: 10px">
 
-                                    <ul class="justify-content-center" th:each="version : ${versionList}">
+                                    <ul class="justify-content-center" th:each="version : ${versionBetaList}">
                                         <li class="text-primary">
-                                            <a class="nav-link active text-primary" href="#" >
-                                                [[${version.getSvVersionId()}]] <i>（Beta）</i>
+                                            <a class="nav-link active text-primary"
+                                               th:href="@{/admin/showVersionDetail/}+${version.svId}">
+                                                [[${version.getSvVersionId()}]] <i>（Beta），</i>
+                                            </a>
+                                            <a class="nav-link active text-primary"
+                                               th:href="@{/admin/downloadBetaVersionSoftware/}+${version.svLink}">
+                                                download
                                             </a>
                                         </li>
                                     </ul>
