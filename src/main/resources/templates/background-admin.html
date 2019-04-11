@@ -20,14 +20,14 @@
         <div class="row">
 
             <!--sidebar-->
-            <div th:replace="~{background-admin-side-bar::side-bar}"></div>
+            <div th:replace="~{background-side-bar::side-bar}"></div>
             <!--sidebar-->
 
             <!-- main right col -->
             <div class="column col-md-10 col-xs-11" id="main">
 
                 <!--top-nav-->
-                <div th:replace="~{background-admin-top-nav::top-nav}"></div>
+                <div th:replace="~{background-top-nav::top-nav}"></div>
                 <!--top-nav-->
 
                 <div class="padding">
@@ -45,7 +45,7 @@
 
                         <br>
 
-                        <form method="get" th:action="@{/admin/updateAdminPage}">
+                        <form method="post" th:action="@{/admin/updateAdminPage}">
                             <label for="basic-addon1">管理员姓名</label>
                             <div class="input-group ">
                                 <span class="input-group-addon" id="basic-addon1">@name</span>
@@ -82,7 +82,7 @@
                     </div>
 
                     <!--footer-->
-                    <div th:replace="~{background-admin-footer.html::footer}"></div>
+                    <div th:replace="~{background-footer.html::footer}"></div>
 
                 </div>
             </div><!-- /main -->

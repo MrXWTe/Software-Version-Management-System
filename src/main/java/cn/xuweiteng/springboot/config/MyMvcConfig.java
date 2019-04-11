@@ -13,7 +13,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     /**
      * 配置静态资源映射
-     * @param registry 注册器
+     * @param registry 资源解析器注册器
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -23,7 +23,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     /**
      * 配置html资源访问映射
-     * @param registry 注册器
+     * @param registry 视图控制器注册器
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -41,6 +41,6 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandleInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/", "/login.html", "/loginTest", "/static/**");
+                .excludePathPatterns("/", "/login.html", "/login/adminLogin", "/static/**");
     }
 }

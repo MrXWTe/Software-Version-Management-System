@@ -19,7 +19,7 @@
 
 
             <!--sidebar-->
-            <div th:replace="~{background-admin-side-bar::side-bar}"></div>
+            <div th:replace="~{background-side-bar::side-bar}"></div>
             <!--sidebar-->
 
 
@@ -28,10 +28,9 @@
 
 
                 <!--top-nav-->
-                <div th:replace="~{background-admin-top-nav::top-nav}"></div>
+                <div th:replace="~{background-top-nav::top-nav}"></div>
                 <!--top-nav-->
 
-                <div class="copyrights">Collect from <a href="http://www.cssmoban.com/">企业网站模板</a></div>
                 <div class="padding">
                     <div class="full col-sm-9">
 
@@ -43,7 +42,7 @@
 
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <a th:href="@{/admin/softwareVersionBetaList/}+${software.softId}" class="pull-right">All Versions</a>
+                                        <a th:href="@{/softwareVersionBetaList/}+${software.softId}" class="pull-right">All Versions</a>
                                         <h4>[[${software.softName}]]</h4>
                                     </div>
                                     <div class="panel-body">
@@ -72,24 +71,24 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <a th:href="@{/admin/background-admin-software/(currentPage=1 )}" aria-label="Previous">
+                                            <a th:href="@{/background-admin-software/(currentPage=1 )}" aria-label="Previous">
                                                 <span aria-hidden="true">&laquo;首页</span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a th:href="@{/admin/background-admin-software/(currentPage=${currentPage-1})}" th:if="${not #strings.equals(currentPage, '1')}" aria-label="Previous">
+                                            <a th:href="@{/background-admin-software/(currentPage=${currentPage-1})}" th:if="${not #strings.equals(currentPage, '1')}" aria-label="Previous">
                                                 <span aria-hidden="true">&lsaquo;上一页</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a th:href="@{/admin/background-admin-software/(currentPage=${currentPage+1})}" th:if="${not #strings.equals(currentPage, pageNum)}" aria-label="Next">
+                                            <a th:href="@{/background-admin-software/(currentPage=${currentPage+1})}" th:if="${not #strings.equals(currentPage, pageNum)}" aria-label="Next">
                                                 <span aria-hidden="true">下一页&rsaquo;</span>
                                             </a>
                                         </li>
 
                                         <li>
-                                            <a th:href="@{/admin/background-admin-software/(currentPage=${pageNum})}" aria-label="Next">
+                                            <a th:href="@{/background-admin-software/(currentPage=${pageNum})}" aria-label="Next">
                                                 <span aria-hidden="true">尾页&raquo;</span>
                                             </a>
                                         </li>
@@ -100,7 +99,7 @@
                         </div>
 
                         <!--footer-->
-                        <div th:replace="~{background-admin-footer.html::footer}"></div>
+                        <div th:replace="~{background-footer.html::footer}"></div>
 
                     </div>
                 </div>

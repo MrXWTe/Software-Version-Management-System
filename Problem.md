@@ -341,3 +341,48 @@ private Date time;
 
 
 
+## 11、自动配置注解`@AutoWired`问题
+
+在之前下我使用`@Autowired`都是直接在需要注入的变量上直接注解，因为这种方式简单快捷，不用考虑太多。
+
+```java
+@Autowired
+private LoginService loginService;
+```
+
+但是用IDEA后，这种注解方法总会报一个警告：`Inspection info: Spring Team recommends: "Always use constructor based dependency injection in your beans. Always use assertions for mandatory dependencies".`大致意思就是“spring团队推荐你使用基于构造器的方式进行依赖注入，并且使用断言来强制依赖”。
+
+我们先来看看使用直接注入有什么问题：如下代码可以看出，使用直接注入方式可能会报出`NullPointerException`。因为JVM加载类时先加载构造方法，再执行`@Autowired`自动注入，在构造方法中user尚未注入，因此为null。
+
+```java
+@Autowired
+private User user;
+private String class;
+public UserAccountServiceImpl(){
+    this.class = user.getClass();
+}
+```
+
+而使用构造注入便不会出现该类原因了。
+
+```java
+private User user;
+private String class;
+@Autowired
+public UserAccountServiceImpl(User user){
+    this.user = user;
+    this.school = user.getClass();
+}
+```
+
+而且最好在变量上加final关键字，表示注入一次以后都不会再改变了。
+
+```java
+private final LoginService loginService;
+
+@Autowired
+public LoginController(LoginService loginService){
+    this.loginService = loginService;
+}
+```
+

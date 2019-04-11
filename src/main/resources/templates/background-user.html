@@ -20,11 +20,11 @@
     <div class="box">
         <div class="row">
             <!--sidebar-->
-            <div th:replace="~{background-admin-side-bar::side-bar}"></div><!--sidebar-->
+            <div th:replace="~{background-side-bar::side-bar}"></div><!--sidebar-->
             <!-- main right col -->
             <div class="column col-sm-10 col-xs-11" id="main">
                 <!--top-nav-->
-                <div th:replace="~{background-admin-top-nav::top-nav}"></div><!--top-nav-->
+                <div th:replace="~{background-top-nav::top-nav}"></div><!--top-nav-->
                 <div class="padding">
                     <div class="full col-sm-9">
 
@@ -32,7 +32,7 @@
                         <hr>
 
                         <div class="">
-                            <form th:action="@{/admin/addUserPage}" method="get">
+                            <form th:action="@{/addUserPage}" method="get">
                                 <input type="submit" class="btn btn-sm btn-primary" value="添加用户" />
                             </form>
                         </div>
@@ -55,10 +55,10 @@
                                 <td th:text="${user.userEnrollDate}"></td>
                                 <td th:text="${user.userStatus}"></td>
                                 <td>
-                                    <a type="button" th:href="@{/admin/updateUserPage/}+${user.userId}"
+                                    <a type="button" th:href="@{/updateUserPage/}+${user.userId}"
                                        class="btn btn-sm btn-success">编辑</a>
 
-                                    <button th:attr="del_uri=@{/admin/deleteUser/(userId=${user.userId})}"
+                                    <button th:attr="del_uri=@{/deleteUser/(userId=${user.userId})}"
                                             class="btn btn-sm btn-danger deleteBtn">删除</button>
                                 </td>
                             </tr>
@@ -69,7 +69,7 @@
                         </form>
 
                         <!--footer-->
-                        <div th:replace="~{background-admin-footer.html::footer}"></div><!--footer-->
+                        <div th:replace="~{background-footer.html::footer}"></div><!--footer-->
                     </div>
                 </div>
             </div><!-- /main -->

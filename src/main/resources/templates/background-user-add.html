@@ -20,18 +20,18 @@
     <div class="box">
         <div class="row">
             <!--sidebar-->
-            <div th:replace="~{background-admin-side-bar::side-bar}"></div><!--sidebar-->
+            <div th:replace="~{background-side-bar::side-bar}"></div><!--sidebar-->
             <!-- main right col -->
             <div class="column col-sm-10 col-xs-11" id="main">
                 <!--top-nav-->
-                <div th:replace="~{background-admin-top-nav::top-nav}"></div><!--top-nav-->
+                <div th:replace="~{background-top-nav::top-nav}"></div><!--top-nav-->
                 <div class="padding">
                     <div class="full col-sm-9">
 
                         <h2 class="text-primary">添加员工信息</h2>
                         <hr>
 
-                        <form method="post" th:action="@{/admin/addUser}">
+                        <form method="post" th:action="@{/addUser}">
                             <label for="basic-addon1">用户名</label>
                             <div class="input-group ">
                                 <span class="input-group-addon" id="basic-addon1">@name</span>
@@ -72,7 +72,7 @@
                         </form>
 
                         <!--footer-->
-                        <div th:replace="~{background-admin-footer.html::footer}"></div><!--footer-->
+                        <div th:replace="~{background-footer.html::footer}"></div><!--footer-->
 
                     </div>
                 </div>

@@ -28,38 +28,55 @@
 <body>
 <h1>电控部</h1>
 <div class="log">
+    <!--管理员登录-->
     <div class="content1">
         <h2>管理员登录</h2>
         <!--th:if determine if the p tag exists-->
-        <p style="color:red" th:text="${errorMessage}" th:if="${not #strings.isEmpty(errorMessage)}"></p>
-        <form method="post" th:action="@{/loginTest}">
-            <input type="text" name="admin_email" value="邮箱" onfocus="this.value = '';"
+        <p style="color:red" th:text="${adminErrorMessage}" th:if="${not #strings.isEmpty(adminErrorMessage)}"></p>
+
+        <form method="post" th:action="@{/login/adminLogin}">
+            <input type="text" name="admin_email" value="管理员邮箱" onfocus="this.value = '';"
                    onblur="if (this.value == '') {this.value = 'EMAIL';}">
             <input type="password" name="admin_password" value="PASSWORD" onfocus="this.value = '';"
                    onblur="if (this.value == '') {this.value = 'PASSWORD';}">
+
             <div class="button-row">
                 <input type="submit" class="sign-in" value="Sign In">
                 <input type="reset" class="reset" value="Reset">
                 <div class="clear"></div>
             </div>
+
         </form>
+
     </div>
+
+
+    <!--员工登录-->
     <div class="content2">
         <h2>员工登录</h2>
-        <form>
-            <input type="text" name="userid" value="USERNAME" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = 'NAME AND SURNAME';}">
-            <input type="tel" name="usrtel" value="PHONE" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = 'PHONE';}">
-            <input type="email" name="email" value="EMAIL ADDRESS" onfocus="this.value = '';"
-                   onblur="if (this.value == '') {this.value = 'EMAIL ADDRESS';}">
-            <input type="password" name="psw" value="PASSWORD" onfocus="this.value = '';"
+        <!--th:if determine if the p tag exists-->
+        <p style="color:red" th:text="${employeeErrorMessage}" th:if="${not #strings.isEmpty(employeeErrorMessage)}"></p>
+
+        <form method="post" th:action="@{/login/employeeLogin}">
+            <input type="text" name="employeeEmail" value="员工邮箱" onfocus="this.value = '';"
+                   onblur="if (this.value == '') {this.value = 'EMAIL';}">
+            <input type="password" name="employeePassword" value="PASSWORD" onfocus="this.value = '';"
                    onblur="if (this.value == '') {this.value = 'PASSWORD';}">
-            <input type="submit" class="register" value="Register">
+
+            <div class="button-row">
+                <input type="submit" class="sign-in" value="Sign In">
+                <input type="reset" class="reset" value="Reset">
+                <div class="clear"></div>
+            </div>
+
         </form>
+
     </div>
+
     <div class="clear"></div>
 </div>
+
+
 <div class="footer">
     <p>
         Copyright &copy; 2016.Company name All rights reserved.More Templates
