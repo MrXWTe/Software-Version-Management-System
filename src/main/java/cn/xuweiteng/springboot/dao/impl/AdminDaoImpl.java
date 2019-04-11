@@ -241,4 +241,15 @@ public class AdminDaoImpl implements AdminDao {
                 softwareVersions.getSvVersionId(), softwareVersions.getSvId()});
     }
 
+
+    @Override
+    public int addVersionBeta(SoftwareVersions softwareVersions) {
+        String sql = "insert into tb_version (sv_info, sv_link, soft_version_id, " +
+                "sv_versionId, sv_version) values (?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
+                softwareVersions.getSvLink(),
+                softwareVersions.getSoftVersionId(),
+                softwareVersions.getSvVersionId(),
+                0});
+    }
 }

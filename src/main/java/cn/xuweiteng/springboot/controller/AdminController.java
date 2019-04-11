@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -230,20 +231,17 @@ public class AdminController {
 
     /**
      * 下载软件
-     * @param link 软件所在地址
-     * @param request 请求信息
      * @param response 响应信息
      * @return null(当前页面)
      * @throws Exception 文件不存在异常
      */
-    @GetMapping("/downloadBetaVersionSoftware/{link}")
-    public String downLoadBetaVersion(@PathVariable("link") String link,
-                                      HttpServletRequest request,
+    @GetMapping("/downloadBetaVersionSoftware/{svId}")
+    public String downLoadBetaVersion(@PathVariable("svId") Long svId,
                                       HttpServletResponse response) throws Exception{
-        System.out.println(link);
-        File srcFileDir = new File(link);
-        String fileName = "1.txt";
-        File file = new File(srcFileDir, fileName);
+
+        String link = adminService.selectVersionBetaBySvId(svId).get(0).getSvLink();
+        File file = new File(link);
+        String fileName = file.getName();
         if(file.exists()){
             // 配置文件下载
             response.setHeader("content-type", "application/octet-stream");
@@ -297,10 +295,17 @@ public class AdminController {
             model.addAttribute("softName", softwareList.get(0).getSoftName());
 
         }
-        return "background-admin-software-version-details";
+        return "background-admin-software-version-details-update";
     }
 
 
+    /**
+     * 更新软件版本详细信息
+     * @param svId 软件版本ID
+     * @param softwareVersions 软件版本信息
+     * @param model 用于存储信息
+     * @return 更新成功后返回当前页面
+     */
     @PostMapping("/updateSoftwareDetails/{svId}")
     public String updateSoftwareDetails(@PathVariable("svId") Long svId,
                                         SoftwareVersions softwareVersions, Model model){
@@ -309,22 +314,65 @@ public class AdminController {
         if(row > 0){
             List<SoftwareVersions> versions = adminService.selectVersionBetaBySvId(svId);
             if(versions!=null && versions.size()>0){
-                String info = versions.get(0).getSvInfo();
-                String[] infos = info.split(";");
-                StringBuffer sb = new StringBuffer();
-                for(String information : infos){
-                    sb.append(information);
-                    sb.append(";");
-                    sb.append("\r\n");
-                }
-                versions.get(0).setSvInfo(sb.toString());
                 model.addAttribute("version", versions.get(0));
 
                 List<Software> softwareList = adminService.
                         selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
                 model.addAttribute("softName", softwareList.get(0).getSoftName());
             }
-            return "background-admin-software-version-details";
+            return "background-admin-software-version-details-update";
+        }else{
+            return "error";
+        }
+    }
+
+
+    /**
+     * 跳转到增加软件版本页面
+     * @return 增加软件版本页面
+     */
+    @GetMapping("/addVersionBetaPage/{softId}")
+    public String addVersionPage(@PathVariable("softId") Long softId, Model model){
+        model.addAttribute("softId", softId);
+        return "background-admin-software-version-details-add";
+    }
+
+
+    @PostMapping("addVersionBeta/{softId}")
+    public String addVersionBeta(MultipartFile fileUpload, Model model,
+                             @RequestParam("svVersionId") String svVersionId,
+                             @RequestParam("svInfo") String svInfo,
+                             @PathVariable("softId") Long softId){
+        //获取文件名
+        String fileName = fileUpload.getOriginalFilename();
+        //获取文件后缀名
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+
+        //指定本地文件夹存储文件
+        String filePath = "E:/";
+        try {
+            //将文件保存到指定路径中
+            fileUpload.transferTo(new File(filePath+fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SoftwareVersions softwareVersion = new SoftwareVersions();
+        softwareVersion.setSvVersionId(svVersionId);
+        softwareVersion.setSvInfo(svInfo);
+        softwareVersion.setSvLink(filePath + fileName);
+        softwareVersion.setSoftVersionId(softId);
+
+        int row = adminService.addVersionBeta(softwareVersion);
+
+        if(row > 0){
+            List<SoftwareVersions> versionBetaList = adminService.selectAllVersionBetaIdByFkId(softId);
+            List<Software> softwareList = adminService.selectSoftwareById(softId);//为了获取软件名字
+
+            model.addAttribute("softId", softId);//软件ID，显示对应ID的所有版本
+            model.addAttribute("softName", softwareList.get(0).getSoftName());
+            model.addAttribute("versionBetaList", versionBetaList);
+            return "background-admin-software-versions-beta";
         }else{
             return "error";
         }

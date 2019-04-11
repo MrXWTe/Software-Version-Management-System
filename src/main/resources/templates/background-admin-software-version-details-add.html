@@ -11,7 +11,6 @@
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
-
 </head>
 <body>
 <div class="wrapper">
@@ -35,52 +34,48 @@
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">软件所有测试版本</h2>
+                        <h2 class="text-primary">增加新版本软件</h2>
                         <hr>
+
 
                         <div class="col-md-4 pull-right" style="margin-right: 70px">
                             <div class="thumbnail">
-
                                 <div class="caption">
                                     <img th:src="@{/static/background/images/insignia.svg}" width="40" height="50">
                                     <span class="text-muted">
                                         SoftWare Name: <i>[[${softName}]]</i>
                                     </span>
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="col-md-7">
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h2 class="row text-info" style="margin-top:30px">All versions of a piece of software</h2>
-                                    <hr class="center-pi" style="margin-top: 10px">
 
-                                    <ul class="justify-content-center" th:each="version : ${versionBetaList}">
-                                        <li class="text-primary">
-                                            <a class="nav-link active text-primary"
-                                               th:href="@{/admin/showVersionDetail/}+${version.svId}">
-                                                [[${version.getSvVersionId()}]] <i>（Beta），</i>
-                                            </a>
-                                            <a class="nav-link active text-primary"
-                                               th:href="@{/admin/downloadBetaVersionSoftware/}+${version.svId}">
-                                                download
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <form role="form" method="post"  enctype="multipart/form-data" th:action="@{/admin/addVersionBeta/}+${softId}">
+                                <label for="basic-addon1">版本号</label>
+                                <div class="input-group ">
+                                    <span class="input-group-addon" id="basic-addon1">@version id</span>
+                                    <input type="text" name="svVersionId" class="form-control"
+                                           placeholder="versionId" aria-describedby="basic-addon1">
                                 </div>
-                            </div>
 
-                            <div>
-                                <form method="get" th:action="@{/admin/addVersionBetaPage/}+${softId}">
-                                    <input type="submit" class="btn btn-primary" value="增加新版本">
-                                </form>
-                            </div>
+                                <br>
+
+                                <!-- 单选 -->
+                                <label>详细信息</label>
+                                <div class="form-group">
+                                    <textarea name="svInfo" id="textInfo" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+
+                                <label>文件</label>
+                                <input type="file" name="fileUpload">
+
+                                <br>
+
+                                <input type="submit" class="btn btn-primary" value="确认添加">
+                            </form>
+
                         </div>
-
-
-
 
                         <!--footer-->
                         <div th:replace="~{background-admin-footer.html::footer}"></div>
@@ -94,7 +89,8 @@
 </div>
 <!-- script references -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
-<script th:src="@{/static/background/js/scripts.js}"></script>
+<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+
 </body>
 </html>

@@ -183,4 +183,15 @@ public class AdminServiceImpl implements AdminService {
     public int updateVersionBeta(SoftwareVersions softwareVersions) {
         return adminDao.updateVersionBeta(softwareVersions);
     }
+
+
+    /**
+     * 增加  测试版本  信息
+     * @param softwareVersions 增加的信息
+     * @return 改变的行数
+     */
+    @Override
+    public int addVersionBeta(SoftwareVersions softwareVersions) {
+        return adminDao.addVersionBeta(softwareVersions);
+    }
 }
