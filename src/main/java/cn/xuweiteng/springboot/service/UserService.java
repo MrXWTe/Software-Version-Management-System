@@ -22,6 +22,15 @@ public interface UserService {
 
 
     /**
+     * 根据用户email和用户密码查询用户
+     * @param userEmail 用户Email
+     * @param userPassword 用户密码
+     * @return 用户
+     */
+    User selectAdminByEmailAndPassword(String userEmail, String userPassword);
+
+
+    /**
      * 根据ID删除用户
      * @param userId 删除用户ID
      * @return 改变的行号

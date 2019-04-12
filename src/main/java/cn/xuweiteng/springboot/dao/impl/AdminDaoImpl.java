@@ -26,9 +26,21 @@ public class AdminDaoImpl implements AdminDao {
      */
     @Override
     public int updateAdmin(Administrator admin) {
-        String sql = "update administrator set admin_name=?, admin_email=? where admin_id=?";
-        return jdbcTemplate.update(sql, new Object[] {admin.getAdmin_name(), admin.getAdmin_email(),
-                admin.getAdmin_id()});
+        if(admin.getAdmin_password().equals("")){
+            String sql = "update administrator set admin_name=?, admin_email=? where admin_id=?";
+            return jdbcTemplate.update(sql,
+                    new Object[] {admin.getAdmin_name(),
+                            admin.getAdmin_email(),
+                            admin.getAdmin_id()});
+        }else{
+            String sql = "update administrator set admin_name=?, admin_email=?, admin_password=? where admin_id=?";
+            return jdbcTemplate.update(sql,
+                    new Object[] {admin.getAdmin_name(),
+                            admin.getAdmin_email(),
+                            admin.getAdmin_password(),
+                            admin.getAdmin_id()});
+        }
+
     }
 
 

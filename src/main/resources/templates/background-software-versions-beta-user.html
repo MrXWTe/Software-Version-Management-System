@@ -20,7 +20,7 @@
 
 
             <!--sidebar-->
-            <div th:replace="~{background-side-bar::side-bar}"></div>
+            <div th:replace="~{background-side-bar-user::side-bar}"></div>
             <!--sidebar-->
 
 
@@ -29,7 +29,7 @@
 
 
                 <!--top-nav-->
-                <div th:replace="~{background-top-nav::top-nav}"></div>
+                <div th:replace="~{background-top-nav-user::top-nav}"></div>
                 <!--top-nav-->
 
                 <div class="padding">
@@ -73,9 +73,7 @@
                             </div>
 
                             <div>
-                                <form method="get" th:action="@{/addBetaVersionPage/}+${softId}">
-                                    <input type="submit" class="btn btn-primary" value="增加新版本">
-                                </form>
+
                             </div>
                         </div>
 

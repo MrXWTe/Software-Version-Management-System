@@ -51,6 +51,25 @@ public class UserDaoImpl implements UserDao {
 
 
     /**
+     * 根据用户email和用户密码查询用户
+     * @param userEmail 用户Email
+     * @param userPassword 用户密码
+     * @return 用户
+     */
+    @Override
+    public User selectAdminByEmailAndPassword(String userEmail, String userPassword) {
+        String sql = "select * from tb_user where user_email=? and user_password=?";
+        List<User> userList =  jdbcTemplate.query(sql, new Object[] {userEmail, userPassword},
+                new BeanPropertyRowMapper<>(User.class));
+        if(userList != null && userList.size()>0){
+            return userList.get(0);
+        }else{
+            return null;
+        }
+    }
+
+
+    /**
      * 根据ID删除用户
      * @param userId 删除用户ID
      * @return 改变的行号

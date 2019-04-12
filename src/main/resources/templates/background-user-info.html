@@ -20,55 +20,62 @@
         <div class="row">
 
             <!--sidebar-->
-            <div th:replace="~{background-side-bar::side-bar}"></div>
+            <div th:replace="~{background-side-bar-user::side-bar}"></div>
             <!--sidebar-->
 
             <!-- main right col -->
             <div class="column col-md-10 col-xs-11" id="main">
 
                 <!--top-nav-->
-                <div th:replace="~{background-top-nav::top-nav}"></div>
+                <div th:replace="~{background-top-nav-user::top-nav}"></div>
                 <!--top-nav-->
 
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">管理员个人信息</h2>
+                        <h2 class="text-primary">员工个人信息</h2>
                         <hr>
 
-                        <label for="basic-addon0">管理员工号</label>
+                        <label for="basic-addon0">员工工号</label>
                         <div class="input-group ">
                             <span class="input-group-addon" id="basic-addon0">@id</span>
-                            <input type="text" th:value="${session.admin.admin_id}"
-                                   class="form-control" placeholder="Admin ID" aria-describedby="basic-addon0" readonly required>
+                            <input type="text" name="userId" th:value="${session.user.userId}"
+                                   class="form-control" placeholder="Admin ID" aria-describedby="basic-addon0" required>
                         </div>
 
                         <br>
 
                         <form method="post" th:action="@{/admin/updateAdminPage}">
-                            <label for="basic-addon1">管理员姓名</label>
+                            <label for="basic-addon1">员工姓名</label>
                             <div class="input-group ">
                                 <span class="input-group-addon" id="basic-addon1">@name</span>
-                                <input type="text" class="form-control" th:value="${session.admin.admin_name}"
-                                       placeholder="Username" aria-describedby="basic-addon1" readonly required>
+                                <input type="text" name="userName" class="form-control" th:value="${session.user.userName}"
+                                       placeholder="Username" aria-describedby="basic-addon1" required>
                             </div>
 
                             <br>
 
-                            <label for="basic-addon2">管理员 Email</label>
+                            <label for="basic-addon2">员工 Email</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon2">@gz.com</span>
-                                <input type="text"  class="form-control" th:value="${session.admin.admin_email}"
-                                       placeholder="xxx@gz.com" aria-describedby="basic-addon2" readonly required>
+                                <input type="text" name="userEmail" class="form-control" th:value="${session.user.userEmail}"
+                                       placeholder="xxx@gz.com" aria-describedby="basic-addon2" required>
                             </div>
 
                             <br>
 
-                            <label for="basic-addon3">是否为最终管理员</label>
+                            <label for="basic-addon3">员工注册时间</label>
                             <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon3">@true/false;1/0</span>
-                                <input type="text" class="form-control" th:value="${session.admin.final_admin}"
-                                       placeholder="1:yes;0:no" aria-label="Amount (to the nearest dollar)" readonly required>
+                                <span class="input-group-addon" id="basic-addon3">yyyy-MM-dd</span>
+                                <input type="text" readonly name="userEnrollDate" class="form-control" th:value="${session.user.userEnrollDate}"
+                                       aria-label="Amount (to the nearest dollar)">
+                            </div>
+
+                            <label for="basic-addon4">员工状态</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon4">在职/离职</span>
+                                <input type="text" readonly name="userEnrollDate" class="form-control" th:value="${session.user.userStatus}?'在职':'离职'"
+                                       aria-label="Amount (to the nearest dollar)">
                             </div>
 
                             <br>

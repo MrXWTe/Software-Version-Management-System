@@ -20,7 +20,7 @@
 
 
             <!--sidebar-->
-            <div th:replace="~{background-side-bar::side-bar}"></div>
+            <div th:replace="~{background-side-bar-user::side-bar}"></div>
             <!--sidebar-->
 
 
@@ -29,13 +29,13 @@
 
 
                 <!--top-nav-->
-                <div th:replace="~{background-top-nav::top-nav}"></div>
+                <div th:replace="~{background-top-nav-user::top-nav}"></div>
                 <!--top-nav-->
 
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">软件所有测试版本</h2>
+                        <h2 class="text-primary">软件所有发机版本</h2>
                         <hr>
 
                         <div class="col-md-4 pull-right" style="margin-right: 70px">
@@ -57,25 +57,19 @@
                                     <h2 class="row text-info" style="margin-top:30px">All versions of a piece of software</h2>
                                     <hr class="center-pi" style="margin-top: 10px">
 
-                                    <ul class="justify-content-center" th:each="version : ${versionBetaList}">
+                                    <ul class="justify-content-center" th:each="version : ${versionReleaseList}">
                                         <li class="text-primary">
-                                            <a class="nav-link active text-primary"
-                                               th:href="@{/betaVersionDetailPage/}+${version.svId}">
-                                                [[${version.getSvVersionId()}]] <i>（Beta），</i>
+                                            <a class="nav-link active text-primary" href="#" >
+                                                [[${version.getSvVersionId()}]] <i>（Release）</i>
                                             </a>
+
                                             <a class="nav-link active text-primary"
-                                               th:href="@{/downloadBetaVersionSoftware/}+${version.svId}">
+                                               th:href="@{/downloadBetaVersionSoftware/}+${version.svLink}">
                                                 download
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-
-                            <div>
-                                <form method="get" th:action="@{/addBetaVersionPage/}+${softId}">
-                                    <input type="submit" class="btn btn-primary" value="增加新版本">
-                                </form>
                             </div>
                         </div>
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,13 +34,13 @@ public class SoftwareController {
 
     /**
      * 跳转到展示软件列表页面
-     *
      * @param map 用于存放返回数据
      * @return string
      */
-    @GetMapping("/background-admin-software")
-    public String showSoftwarePage(Map<String, Object> map,
-                                   @RequestParam("currentPage") String currentPageString) {
+    @GetMapping("/softwareListPage")
+    public String toSoftwareListPage(Map<String, Object> map,
+                                     @RequestParam("currentPage") String currentPageString,
+                                     HttpSession session) {
         // 当前页面
         int currentPage = Integer.parseInt(currentPageString);
 
@@ -55,25 +56,36 @@ public class SoftwareController {
         map.put("totalNum", totalNum);
         map.put("pageNum", pageNum);
         map.put("currentPage", currentPage);
-        return "background-software";
+        if((Integer)session.getAttribute("role") == 0){
+            return "background-software";
+        }else if((Integer)session.getAttribute("role") == 1){
+            return "background-software-user";
+        }
+        return "error";
     }
 
 
     /**
-     * 显示指定ID的所有  测试版本  软件
+     * 跳转到显示指定ID的所有  测试版本  软件页面
      * @param id 指定的软件ID
      * @param model 用于存储信息
      * @return 显示版本列表页面
      */
-    @GetMapping("/softwareVersionBetaList/{softId}")
-    public String showSoftWareVersionBetaList(@PathVariable("softId") Long id, Model model){
+    @GetMapping("/softwareBetaVersionListPage/{softId}")
+    public String toSoftwareBetaVersionListPage(@PathVariable("softId") Long id, Model model,
+                                                HttpSession session){
         List<SoftwareVersions> versionBetaList = softwareService.selectAllVersionBetaIdByFkId(id);
         List<Software> softwareList = softwareService.selectSoftwareById(id);//为了获取软件名字
 
         model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
         model.addAttribute("softName", softwareList.get(0).getSoftName());
         model.addAttribute("versionBetaList", versionBetaList);
-        return "background-software-versions-beta";
+        if((Integer)session.getAttribute("role") == 0){
+            return "background-software-versions-beta";
+        }else if((Integer)session.getAttribute("role") == 1){
+            return "background-software-versions-beta-user";
+        }
+        return null;
     }
 
 
@@ -83,27 +95,34 @@ public class SoftwareController {
      * @param model 用于存储信息
      * @return 显示版本列表页面
      */
-    @GetMapping("/softwareVersionReleaseList/{softId}")
-    public String showSoftWareVersionReleaseList(@PathVariable("softId") Long id, Model model){
+    @GetMapping("/softwareReleaseVersionListPage/{softId}")
+    public String toSoftwareReleaseVersionListPage(@PathVariable("softId") Long id,
+                                                   HttpSession session,
+                                                   Model model){
         List<SoftwareVersions> versionReleaseList = softwareService.selectAllVersionReleaseIdByFkId(id);
         List<Software> softwareList = softwareService.selectSoftwareById(id);//为了获取软件名字
 
         model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
         model.addAttribute("softName", softwareList.get(0).getSoftName());
         model.addAttribute("versionReleaseList", versionReleaseList);
-        return "background-software-versions-release";
+        if((Integer)session.getAttribute("role") == 0){
+            return "background-software-versions-release";
+        }else if((Integer)session.getAttribute("role") == 1){
+            return "background-software-versions-release-user";
+        }
+        return null;
     }
 
 
     /**
-     * 下载软件
+     * 下载测试版本软件
      * @param response 响应信息
      * @return null(当前页面)
      * @throws Exception 文件不存在异常
      */
     @GetMapping("/downloadBetaVersionSoftware/{svId}")
-    public String downLoadBetaVersion(@PathVariable("svId") Long svId,
-                                      HttpServletResponse response) throws Exception{
+    public String downLoadBetaVersionSoftware(@PathVariable("svId") Long svId,
+                                              HttpServletResponse response) throws Exception{
 
         String link = softwareService.selectVersionBetaBySvId(svId).get(0).getSvLink();
         File file = new File(link);
@@ -141,19 +160,12 @@ public class SoftwareController {
      * @param model 用于存储转发信息
      * @return 软件详细信息界面
      */
-    @GetMapping("showVersionDetail/{svId}")
-    public String showVersionDetail(@PathVariable("svId") Long svId, Model model){
+    @GetMapping("betaVersionDetailPage/{svId}")
+    public String toBetaVersionDetail(@PathVariable("svId") Long svId,
+                                      HttpSession session,
+                                      Model model){
         List<SoftwareVersions> versions = softwareService.selectVersionBetaBySvId(svId);
         if(versions!=null && versions.size()>0){
-            /*String info = versions.get(0).getSvInfo();
-            String[] infos = info.split(";");
-            StringBuffer sb = new StringBuffer();
-            for(String information : infos){
-                sb.append(information);
-                sb.append(";");
-                sb.append("\r\n");
-            }
-            versions.get(0).setSvInfo(sb.toString());*/
             model.addAttribute("version", versions.get(0));
 
             List<Software> softwareList = softwareService.
@@ -161,7 +173,12 @@ public class SoftwareController {
             model.addAttribute("softName", softwareList.get(0).getSoftName());
 
         }
-        return "background-software-version-details-update";
+        if((Integer)session.getAttribute("role") == 0){
+            return "background-software-version-details-update";
+        }else if((Integer)session.getAttribute("role") == 1){
+            return "background-software-version-details-user";
+        }
+        return null;
     }
 
 
@@ -172,9 +189,10 @@ public class SoftwareController {
      * @param model 用于存储信息
      * @return 更新成功后返回当前页面
      */
-    @PostMapping("/updateSoftwareDetails/{svId}")
-    public String updateSoftwareDetails(@PathVariable("svId") Long svId,
-                                        SoftwareVersions softwareVersions, Model model){
+    @PostMapping("/updateBetaVersionDetail/{svId}")
+    public String updateBetaVersionDetail(@PathVariable("svId") Long svId,
+                                          SoftwareVersions softwareVersions,
+                                          Model model){
         softwareVersions.setSvId(svId);
         int row = softwareService.updateVersionBeta(softwareVersions);
         if(row > 0){
@@ -197,8 +215,8 @@ public class SoftwareController {
      * 跳转到增加软件版本页面
      * @return 增加软件版本页面
      */
-    @GetMapping("/addVersionBetaPage/{softId}")
-    public String addVersionPage(@PathVariable("softId") Long softId, Model model){
+    @GetMapping("/addBetaVersionPage/{softId}")
+    public String toAddBetaVersionPage(@PathVariable("softId") Long softId, Model model){
         model.addAttribute("softId", softId);
         return "background-software-version-details-add";
     }
@@ -213,8 +231,8 @@ public class SoftwareController {
      * @param softId 版本软件ID
      * @return
      */
-    @PostMapping("addVersionBeta/{softId}")
-    public String addVersionBeta(MultipartFile fileUpload, Model model,
+    @PostMapping("addBetaVersion/{softId}")
+    public String addBetaVersion(MultipartFile fileUpload, Model model,
                                  @RequestParam("svVersionId") String svVersionId,
                                  @RequestParam("svInfo") String svInfo,
                                  @PathVariable("softId") Long softId){

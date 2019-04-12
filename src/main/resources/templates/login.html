@@ -33,6 +33,7 @@
         <h2>管理员登录</h2>
         <!--th:if determine if the p tag exists-->
         <p style="color:red" th:text="${adminErrorMessage}" th:if="${not #strings.isEmpty(adminErrorMessage)}"></p>
+        <p style="color:red" th:text="${errorMessage}" th:if="${not #strings.isEmpty(errorMessage)}"></p>
 
         <form method="post" th:action="@{/login/adminLogin}">
             <input type="text" name="admin_email" value="管理员邮箱" onfocus="this.value = '';"
@@ -56,6 +57,7 @@
         <h2>员工登录</h2>
         <!--th:if determine if the p tag exists-->
         <p style="color:red" th:text="${employeeErrorMessage}" th:if="${not #strings.isEmpty(employeeErrorMessage)}"></p>
+        <p style="color:red" th:text="${errorMessage}" th:if="${not #strings.isEmpty(errorMessage)}"></p>
 
         <form method="post" th:action="@{/login/employeeLogin}">
             <input type="text" name="employeeEmail" value="员工邮箱" onfocus="this.value = '';"
