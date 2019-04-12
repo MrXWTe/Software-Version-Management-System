@@ -145,7 +145,7 @@ public class SoftwareController {
     public String showVersionDetail(@PathVariable("svId") Long svId, Model model){
         List<SoftwareVersions> versions = softwareService.selectVersionBetaBySvId(svId);
         if(versions!=null && versions.size()>0){
-            String info = versions.get(0).getSvInfo();
+            /*String info = versions.get(0).getSvInfo();
             String[] infos = info.split(";");
             StringBuffer sb = new StringBuffer();
             for(String information : infos){
@@ -153,7 +153,7 @@ public class SoftwareController {
                 sb.append(";");
                 sb.append("\r\n");
             }
-            versions.get(0).setSvInfo(sb.toString());
+            versions.get(0).setSvInfo(sb.toString());*/
             model.addAttribute("version", versions.get(0));
 
             List<Software> softwareList = softwareService.
@@ -204,6 +204,15 @@ public class SoftwareController {
     }
 
 
+    /**
+     * 增加软件版本，上传文件
+     * @param fileUpload 上传的软件对象
+     * @param model 用于存储信息
+     * @param svVersionId 版本ID
+     * @param svInfo 版本信息
+     * @param softId 版本软件ID
+     * @return
+     */
     @PostMapping("addVersionBeta/{softId}")
     public String addVersionBeta(MultipartFile fileUpload, Model model,
                                  @RequestParam("svVersionId") String svVersionId,
@@ -211,8 +220,6 @@ public class SoftwareController {
                                  @PathVariable("softId") Long softId){
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
-        //获取文件后缀名
-        String suffixName = fileName.substring(fileName.lastIndexOf("."));
 
         //指定本地文件夹存储文件
         String filePath = "E:/";
@@ -243,5 +250,4 @@ public class SoftwareController {
             return "error";
         }
     }
-
 }

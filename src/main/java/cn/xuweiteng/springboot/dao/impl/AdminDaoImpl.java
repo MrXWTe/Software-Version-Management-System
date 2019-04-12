@@ -2,9 +2,6 @@ package cn.xuweiteng.springboot.dao.impl;
 
 import cn.xuweiteng.springboot.dao.AdminDao;
 import cn.xuweiteng.springboot.pojo.Administrator;
-import cn.xuweiteng.springboot.pojo.Software;
-import cn.xuweiteng.springboot.pojo.SoftwareVersions;
-import cn.xuweiteng.springboot.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,7 +18,6 @@ public class AdminDaoImpl implements AdminDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    /****************************管理员操作**************************************************/
 
     /**
      * 编辑管理员
@@ -52,9 +48,4 @@ public class AdminDaoImpl implements AdminDao {
             return null;
         return admin.get(0);
     }
-
-
-    /****************************软件操作**************************************************/
-
-
 }
