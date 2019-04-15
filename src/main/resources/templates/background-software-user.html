@@ -41,15 +41,23 @@
                             <div class="col-sm-6" th:each="software:${softwareList}">
 
                                 <div class="panel panel-default">
+
                                     <div class="panel-heading">
                                         <a th:href="@{/softwareBetaVersionListPage/}+${software.softId}" class="pull-right">All Versions</a>
                                         <h4>[[${software.softName}]]</h4>
                                     </div>
+
                                     <div class="panel-body">
                                         <div class="list-group">
                                             <a class="list-group-item">Information：[[${software.softInfo}]]</a>
                                             <a class="list-group-item">Last Modified Date：[[${software.softLastmodifiedDate}]]</a>
-                                            <a class="list-group-item">Author：[[${software.softAuthor}]]</a>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-footer">
+                                        <div class="list-group">
+                                            <a href="#" class="pull-right">Modify information</a>
                                         </div>
                                     </div>
                                 </div>

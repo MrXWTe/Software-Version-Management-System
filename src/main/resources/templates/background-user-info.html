@@ -40,17 +40,19 @@
                         <div class="input-group ">
                             <span class="input-group-addon" id="basic-addon0">@id</span>
                             <input type="text" name="userId" th:value="${session.user.userId}"
-                                   class="form-control" placeholder="Admin ID" aria-describedby="basic-addon0" required>
+                                   class="form-control" placeholder="Admin ID"
+                                   aria-describedby="basic-addon0" readonly required>
                         </div>
 
                         <br>
 
-                        <form method="post" th:action="@{/admin/updateAdminPage}">
+                        <form method="post" action="#">
                             <label for="basic-addon1">员工姓名</label>
                             <div class="input-group ">
                                 <span class="input-group-addon" id="basic-addon1">@name</span>
-                                <input type="text" name="userName" class="form-control" th:value="${session.user.userName}"
-                                       placeholder="Username" aria-describedby="basic-addon1" required>
+                                <input type="text" name="userName" class="form-control"
+                                       th:value="${session.user.userName}"
+                                       aria-describedby="basic-addon1" readonly required>
                             </div>
 
                             <br>
@@ -59,7 +61,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon2">@gz.com</span>
                                 <input type="text" name="userEmail" class="form-control" th:value="${session.user.userEmail}"
-                                       placeholder="xxx@gz.com" aria-describedby="basic-addon2" required>
+                                       aria-describedby="basic-addon2" readonly required>
                             </div>
 
                             <br>
@@ -67,22 +69,24 @@
                             <label for="basic-addon3">员工注册时间</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon3">yyyy-MM-dd</span>
-                                <input type="text" readonly name="userEnrollDate" class="form-control" th:value="${session.user.userEnrollDate}"
-                                       aria-label="Amount (to the nearest dollar)">
+                                <input type="text" name="userEnrollDate"
+                                       class="form-control" th:value="${session.user.userEnrollDate}"
+                                       aria-label="Amount (to the nearest dollar)" readonly>
                             </div>
 
                             <label for="basic-addon4">员工状态</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon4">在职/离职</span>
-                                <input type="text" readonly name="userEnrollDate" class="form-control" th:value="${session.user.userStatus}?'在职':'离职'"
-                                       aria-label="Amount (to the nearest dollar)">
+                                <input type="text" name="userEnrollDate" class="form-control"
+                                       th:value="${session.user.userStatus}?'在职':'离职'"
+                                       aria-label="Amount (to the nearest dollar)" readonly>
                             </div>
 
                             <br>
 
-                            <div>
+                            <!--<div>
                                 <button class="btn btn-primary" type="submit">修改个人信息</button>
-                            </div>
+                            </div>-->
 
                         </form>
 

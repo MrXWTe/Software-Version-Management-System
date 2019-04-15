@@ -81,13 +81,88 @@ public class SoftwareController {
      * @return 软件列表页面
      */
     @PostMapping("addSoftware")
-    public String addSoftware(Software software){
-        System.out.println(software);
-        return "success";
+    public String addSoftware(Software software,
+                              Map<String, Object> map,
+                              HttpSession session){
+        int row = softwareService.addSoftware(software);
+        if(row > 0){
+
+            // 获取软件列表
+            List<Software> softwareList = softwareService.selectSoftwaresByCurrentPage(1);
+            map.put("softwareList", softwareList);
+
+            // 获取软件数量
+            int totalNum = softwareService.selectCountOfSoftwares();
+            int pageNum = totalNum % 4 == 0 ? totalNum / 4 : totalNum / 4 + 1;
+
+
+            map.put("totalNum", totalNum);
+            map.put("pageNum", pageNum);
+            map.put("currentPage", 1);
+            if((Integer)session.getAttribute("role") == 0){
+                return "background-software";
+            }else if((Integer)session.getAttribute("role") == 1){
+                return "background-software-user";
+            }
+            return "error";
+        }else{
+            return "error";
+        }
     }
 
 
+    /**
+     * 跳转到 编辑软件信息界面
+     * @return 编辑软件信息页面
+     */
+    @GetMapping("updateSoftwarePage/{softId}")
+    public String toUpdateSoftwarePage(@PathVariable("softId") Long softId,
+                                       Model model){
+        List<Software> softwareList = softwareService.selectSoftwareById(softId);
+        if(softwareList != null && softwareList.size()>0){
+            model.addAttribute("software", softwareList.get(0));
+        }else{
+            return "error";
+        }
+        return "background-software-update";
+    }
 
+
+    /**
+     * 编辑软件信息操作
+     * @param software 软件对象
+     * @param map 用于存储信息
+     * @param session 用于存储信息
+     * @param softId 编辑的软件ID
+     * @return 软件列表页面
+     */
+    @PostMapping("/updateSoftware/{softId}")
+    public String updateSoftware(Software software, Map<String, Object> map,
+                                 HttpSession session,
+                                 @PathVariable("softId") Long softId){
+        software.setSoftId(softId);
+        int row = softwareService.updateSoftware(software);
+        if(row > 0){
+            // 获取软件列表
+            List<Software> softwareList = softwareService.selectSoftwaresByCurrentPage(1);
+            map.put("softwareList", softwareList);
+
+            // 获取软件数量
+            int totalNum = softwareService.selectCountOfSoftwares();
+            int pageNum = totalNum % 4 == 0 ? totalNum / 4 : totalNum / 4 + 1;
+
+            map.put("totalNum", totalNum);
+            map.put("pageNum", pageNum);
+            map.put("currentPage", 1);
+            if((Integer)session.getAttribute("role") == 0){
+                return "background-software";
+            }else if((Integer)session.getAttribute("role") == 1){
+                return "background-software-user";
+            }
+            return "error";
+        }
+        return "error";
+    }
 
 
     /**
@@ -145,7 +220,6 @@ public class SoftwareController {
             return "error";
         }
     }
-
 
 
     /**

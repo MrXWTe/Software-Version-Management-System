@@ -34,7 +34,7 @@
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">增加软件</h2>
+                        <h2 class="text-primary">编辑软件信息</h2>
                         <hr>
 
 
@@ -43,7 +43,7 @@
                                 <div class="caption">
                                     <img th:src="@{/static/background/images/insignia.svg}" width="40" height="50">
                                     <span class="text-muted">
-                                        SoftWare Name: <i>[[${softName}]]</i>
+                                        SoftWare Name: <i>[[${software.softName}]]</i>
                                     </span>
                                 </div>
                             </div>
@@ -51,11 +51,11 @@
 
                         <div class="col-md-7">
 
-                            <form role="form" method="post"  enctype="multipart/form-data" th:action="@{/addSoftware}">
+                            <form role="form" method="post"  enctype="multipart/form-data" th:action="@{/updateSoftware/}+${software.softId}">
                                 <label for="basic-addon1">软件名</label>
                                 <div class="input-group ">
                                     <span class="input-group-addon" id="basic-addon1">@softName</span>
-                                    <input type="text" name="softName" class="form-control"
+                                    <input type="text" name="softName" class="form-control" th:value="${software.softName}"
                                            placeholder="softName" aria-describedby="basic-addon1" required>
                                 </div>
 
@@ -64,7 +64,8 @@
 
                                 <label>软件功能信息</label>
                                 <div class="form-group">
-                                    <textarea name="softInfo" cols="30" rows="10" class="form-control" required></textarea>
+                                    <textarea name="softInfo" cols="30" rows="10" th:text="${software.softInfo}"
+                                              class="form-control" required></textarea>
                                 </div>
 
                                 <br>
@@ -72,13 +73,13 @@
                                 <label for="basic-addon2">上传日期</label>
                                 <div class="input-group ">
                                     <span class="input-group-addon" id="basic-addon2">@upload date</span>
-                                    <input type="text" name="softLastmodifiedDate" class="form-control"
+                                    <input type="text" name="softLastmodifiedDate" class="form-control" th:value="${software.softLastmodifiedDate}"
                                            placeholder="yyyy-MM-dd hh:mm:ss" aria-describedby="basic-addon2" required>
                                 </div>
 
                                 <br>
 
-                                <input type="submit" class="btn btn-primary" value="确认添加">
+                                <input type="submit" class="btn btn-primary" value="确认修改">
                             </form>
 
                         </div>
@@ -95,8 +96,8 @@
 </div>
 <!-- script references -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
-<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/background/js/scripts.js}"></script>
 
 </body>
 </html>

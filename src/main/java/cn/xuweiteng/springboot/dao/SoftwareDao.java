@@ -62,11 +62,27 @@ public interface SoftwareDao {
 
 
     /**
+     * 更新软件信息
+     * @param software 更新的软件
+     * @return 改变的行数
+     */
+    int updateSoftware(Software software);
+
+
+    /**
      * 更新  测试版本 信息
      * @param softwareVersions 更新的信息
      * @return 改变的行数
      */
     int updateSoftwareDetail(SoftwareVersions softwareVersions);
+
+
+    /**
+     * 添加软件
+     * @param software 软件对象
+     * @return 改变的行数
+     */
+    int addSoftware(Software software);
 
 
     /**

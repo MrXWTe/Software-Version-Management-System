@@ -63,12 +63,13 @@ public class SoftwareDaoImpl implements SoftwareDao {
 
 
     /**
-     * 根据指定ID查询软件名
+     * 根据指定ID查询软件
      * @param id 查询软件ID
      * @return 软件集合
      */
     public List<Software> selectSoftwareById(Long id){
-        String sql = "select soft_name as softName from tb_software where soft_id=?";
+        String sql = "select soft_id as softId, soft_name as softName, soft_info as softInfo," +
+                "soft_last_modified_date as softLastModifiedDate from tb_software where soft_id=?";
         List<Software> softwareList = jdbcTemplate.query(sql, new Object[] {id},
                 new BeanPropertyRowMapper<>(Software.class));
         return softwareList;
@@ -124,6 +125,20 @@ public class SoftwareDaoImpl implements SoftwareDao {
 
 
     /**
+     * 更新软件信息
+     * @param software 更新的软件
+     * @return 改变的行数
+     */
+    @Override
+    public int updateSoftware(Software software) {
+        String sql = "update tb_software set soft_name=?, soft_info=?, soft_last_modified_date=?" +
+                "where soft_id=?";
+        return jdbcTemplate.update(sql, new Object[] {software.getSoftName(), software.getSoftInfo(),
+                software.getSoftLastmodifiedDate(), software.getSoftId()});
+    }
+
+
+    /**
      * 更新软件版本 信息
      * @param softwareVersions 更新的信息
      * @return 改变的行数
@@ -133,6 +148,19 @@ public class SoftwareDaoImpl implements SoftwareDao {
         String sql = "update tb_version set sv_info=?, sv_versionId=? where sv_id=?";
         return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
                 softwareVersions.getSvVersionId(), softwareVersions.getSvId()});
+    }
+
+
+    /**
+     * 添加软件
+     * @param software 软件对象
+     * @return 改变的行数
+     */
+    public int addSoftware(Software software){
+        String sql = "insert into tb_software (soft_name, soft_info, soft_last_modified_date) " +
+                "values (?, ?, ?)";
+        return jdbcTemplate.update(sql, new Object[] {software.getSoftName(),
+                software.getSoftInfo(), software.getSoftLastmodifiedDate()});
     }
 
 

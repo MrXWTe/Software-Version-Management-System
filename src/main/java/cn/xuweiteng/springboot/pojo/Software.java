@@ -1,5 +1,8 @@
 package cn.xuweiteng.springboot.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,6 +13,9 @@ public class Software implements Serializable {
     private Long softId;
     private String softName;
     private String softInfo;
+
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd hh:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date softLastmodifiedDate;
 
 

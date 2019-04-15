@@ -60,11 +60,11 @@
                                     <ul class="justify-content-center" th:each="version : ${versionBetaList}">
                                         <li class="text-primary">
                                             <a class="nav-link active text-primary"
-                                               th:href="@{/betaVersionDetailPage/}+${version.svId}">
+                                               th:href="@{/versionDetailPage/}+${version.svId}">
                                                 [[${version.getSvVersionId()}]] <i>（Beta），</i>
                                             </a>
                                             <a class="nav-link active text-primary"
-                                               th:href="@{/downloadBetaVersionSoftware/}+${version.svId}">
+                                               th:href="@{/downloadSoftware/}+${version.svId}">
                                                 download
                                             </a>
                                         </li>
