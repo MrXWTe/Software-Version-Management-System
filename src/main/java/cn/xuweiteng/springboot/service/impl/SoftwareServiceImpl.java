@@ -89,8 +89,8 @@ public class SoftwareServiceImpl implements SoftwareService {
      * @return 版本列表
      */
     @Override
-    public List<SoftwareVersions> selectVersionBetaBySvId(Long svId) {
-        return softwareDao.selectVersionBetaBySvId(svId);
+    public List<SoftwareVersions> selectVersionDetailBySvId(Long svId) {
+        return softwareDao.selectVersionDetailBySvId(svId);
     }
 
 
@@ -100,8 +100,8 @@ public class SoftwareServiceImpl implements SoftwareService {
      * @return 改变的行数
      */
     @Override
-    public int updateVersionBeta(SoftwareVersions softwareVersions) {
-        return softwareDao.updateVersionBeta(softwareVersions);
+    public int updateSoftwareDetail(SoftwareVersions softwareVersions) {
+        return softwareDao.updateSoftwareDetail(softwareVersions);
     }
 
 
@@ -113,6 +113,17 @@ public class SoftwareServiceImpl implements SoftwareService {
     @Override
     public int addVersionBeta(SoftwareVersions softwareVersions) {
         return softwareDao.addVersionBeta(softwareVersions);
+    }
+
+
+    /**
+     * 增加  发机版本  信息
+     * @param softwareVersions 增加的信息
+     * @return 改变的行数
+     */
+    @Override
+    public int addReleaseVersion(SoftwareVersions softwareVersions) {
+        return softwareDao.addReleaseVersion(softwareVersions);
     }
 
 }

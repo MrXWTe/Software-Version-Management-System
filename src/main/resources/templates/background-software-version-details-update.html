@@ -34,7 +34,7 @@
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">更新软件信息</h2>
+                        <h2 class="text-primary">更新软件版本信息</h2>
                         <hr>
 
                         <div class="col-md-4 pull-right" style="margin-right: 70px">
@@ -50,7 +50,7 @@
 
                         <div class="col-md-7">
 
-                            <form role="form" method="post" th:action="@{/updateBetaVersionDetail/}+${version.svId}">
+                            <form role="form" method="post" th:action="@{/updateSoftwareDetail/}+${version.svId}">
                                 <label for="basic-addon1">版本号</label>
                                 <div class="input-group ">
                                     <span class="input-group-addon" id="basic-addon1">@version id</span>

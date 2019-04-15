@@ -55,6 +55,13 @@
                 <span class="badge">Release</span>
             </a>
         </li>
+
+        <li th:if="${currentPage != null}">
+            <a th:href="@{/addSoftwarePage}">
+                <i class="glyphicon glyphicon-check"></i>&nbsp;
+                <span class="badge">Add Software</span>
+            </a>
+        </li>
     </ul>
 
     <ul class="nav navbar-nav navbar-right">

@@ -10,7 +10,6 @@ public class Software implements Serializable {
     private Long softId;
     private String softName;
     private String softInfo;
-    private String softAuthor;
     private Date softLastmodifiedDate;
 
 
@@ -41,14 +40,6 @@ public class Software implements Serializable {
         this.softInfo = softInfo;
     }
 
-    public String getSoftAuthor() {
-        return softAuthor;
-    }
-
-    public void setSoftAuthor(String softAuthor) {
-        this.softAuthor = softAuthor;
-    }
-
     public Date getSoftLastmodifiedDate() {
         return softLastmodifiedDate;
     }
@@ -63,7 +54,6 @@ public class Software implements Serializable {
                 "softId=" + softId +
                 ", softName='" + softName + '\'' +
                 ", softInfo='" + softInfo + '\'' +
-                ", softAuthor='" + softAuthor + '\'' +
                 ", softLastmodifiedDate=" + softLastmodifiedDate +
                 '}';
     }

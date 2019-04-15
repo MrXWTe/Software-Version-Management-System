@@ -37,8 +37,10 @@
                             <label for="basic-addon1">管理员姓名</label>
                             <div class="input-group ">
                                 <span class="input-group-addon" id="basic-addon1">@name</span>
-                                <input type="text" name="admin_name" th:value="${session.admin.admin_name}"
-                                       class="form-control" placeholder="Username" aria-describedby="basic-addon1" required>
+                                <input type="text" id="name" name="admin_name"
+                                       th:value="${session.admin.admin_name}"
+                                       class="form-control" placeholder="Username"
+                                       aria-describedby="basic-addon1" required />
                             </div>
 
                             <br>
@@ -46,22 +48,38 @@
                             <label for="basic-addon2">管理员 Email</label>
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon2">@gz.com</span>
-                                <input type="text" name="admin_email" th:value="${session.admin.admin_email}"
-                                       class="form-control" placeholder="Recipient's username" aria-describedby="basic-addon2" required>
+                                <input type="text" id="email" name="admin_email"
+                                       th:value="${session.admin.admin_email}"
+                                       class="form-control" placeholder="Email"
+                                       aria-describedby="basic-addon2" required />
                             </div>
 
                             <br>
 
                             <label for="basic-addon3">管理员 密码</label>
                             <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon3">password</span>
-                                <input type="password" name="admin_password" class="form-control"
-                                       placeholder="******" aria-describedby="basic-addon3" required>
+                                <span class="input-group-addon" id="basic-addon3">@password</span>
+                                <input type="password" id="pwd" name="admin_password"
+                                       th:value="${session.admin.admin_password}"
+                                       class="form-control" placeholder="******"
+                                       aria-describedby="basic-addon3" required />
                             </div>
 
                             <br>
 
-                            <input type="submit" class="btn btn-success" value="确认修改">
+                            <label for="basic-addon4">确认密码</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon4">@password</span>
+                                <input type="password" id="rePwd" onblur="checkPassword()"
+                                       th:value="${session.admin.admin_password}"
+                                       class="form-control" placeholder="******"
+                                       aria-describedby="basic-addon4" />
+                            </div>
+                            <div id="rePwd_prompt" style="color: red"></div>
+
+                            <br>
+
+                            <input type="submit" id="confirmBtn" class="btn btn-success" value="确认修改" disabled/>
                         </form>
 
                         <!--footer-->
@@ -76,5 +94,32 @@
 <script type="text/javascript" th:src="@{/webjars/jquery/3.3.1-2/jquery.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/background/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/background/js/scripts.js}"></script>
+<script>
+    <!-- 检验两次输入的密码是否一致 -->
+    function checkPassword() {
+        var pwd = document.getElementById("pwd").value;
+        var rePwd = document.getElementById("rePwd").value;
+        var rePwdId = document.getElementById("rePwd_prompt");
+        rePwdId.innerHTML="";
+        if(pwd!=rePwd){
+            rePwdId.innerHTML="两次输入的密码不一致";
+            $("#confirmBtn").attr("readonly", "readonly");
+            return false;
+        }
+        $("#confirmBtn").removeAttr("disabled");
+        return true;
+    }
+
+    <!-- 检验  email输入框  是否改变，改变则激活确认修改框 -->
+    $("#email").on("change", function () {
+        $("#confirmBtn").removeAttr("disabled");
+    });
+
+    <!-- 检验  name输入框  是否改变，改变则激活确认修改框 -->
+    $("#name").on("change", function () {
+        $("#confirmBtn").removeAttr("disabled");
+    });
+
+</script>
 </body>
 </html>

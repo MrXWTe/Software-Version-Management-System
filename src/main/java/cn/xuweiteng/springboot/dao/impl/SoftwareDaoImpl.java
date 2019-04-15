@@ -54,7 +54,7 @@ public class SoftwareDaoImpl implements SoftwareDao {
         int startNum = (currentPage-1) * 4;
         int endPage = 4;
         String sql = "select soft_id as softId, soft_name as softName, " +
-                "soft_info as softInfo, soft_author as softAuthor, soft_last_modified_date as " +
+                "soft_info as softInfo, soft_last_modified_date as " +
                 "softLastModifiedDate from tb_software limit " + startNum + ", " + endPage;
 
         List<Software> softwareList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Software.class));
@@ -112,7 +112,7 @@ public class SoftwareDaoImpl implements SoftwareDao {
      * @return 版本列表
      */
     @Override
-    public List<SoftwareVersions> selectVersionBetaBySvId(Long svId) {
+    public List<SoftwareVersions> selectVersionDetailBySvId(Long svId) {
         String sql = "select sv_id as svId, sv_info as svInfo, sv_link as svLink, sv_versionId as svVersionId, " +
                 "sv_version as svVersion, soft_version_id as softVersionId from tb_version" +
                 " inter join tb_software on soft_version_id=soft_id where sv_id=?";
@@ -129,13 +129,18 @@ public class SoftwareDaoImpl implements SoftwareDao {
      * @return 改变的行数
      */
     @Override
-    public int updateVersionBeta(SoftwareVersions softwareVersions) {
+    public int updateSoftwareDetail(SoftwareVersions softwareVersions) {
         String sql = "update tb_version set sv_info=?, sv_versionId=? where sv_id=?";
         return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
                 softwareVersions.getSvVersionId(), softwareVersions.getSvId()});
     }
 
 
+    /**
+     * 增加  测试版本  信息
+     * @param softwareVersions 增加的信息
+     * @return 改变的行数
+     */
     @Override
     public int addVersionBeta(SoftwareVersions softwareVersions) {
         String sql = "insert into tb_version (sv_info, sv_link, soft_version_id, " +
@@ -146,4 +151,22 @@ public class SoftwareDaoImpl implements SoftwareDao {
                 softwareVersions.getSvVersionId(),
                 0});
     }
+
+
+    /**
+     * 增加  发机版本  信息
+     * @param softwareVersions 增加的信息
+     * @return 改变的行数
+     */
+    @Override
+    public int addReleaseVersion(SoftwareVersions softwareVersions) {
+        String sql = "insert into tb_version (sv_info, sv_link, soft_version_id, " +
+                "sv_versionId, sv_version) values (?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
+                softwareVersions.getSvLink(),
+                softwareVersions.getSoftVersionId(),
+                softwareVersions.getSvVersionId(),
+                1});
+    }
+
 }

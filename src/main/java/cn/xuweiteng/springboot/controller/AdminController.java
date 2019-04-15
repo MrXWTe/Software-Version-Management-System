@@ -58,9 +58,9 @@ public class AdminController {
         int row = adminService.updateAdmin(admin);
         if(row > 0){
             //因为管理员信息已经更改，我们需要重新查询管理员信息，并更新session信息
-            Administrator adminModified = adminService.selectAdminByEmailAndPassword(
-                    admin.getAdmin_email(), admin.getAdmin_password());
-            session.setAttribute("admin", adminModified);
+//            Administrator adminModified = adminService.selectAdminByEmailAndPassword(
+//                    admin.getAdmin_email(), admin.getAdmin_password());
+            //session.setAttribute("admin", adminModified);
             return "redirect:/background-admin.html";
         }else{
             return "error";

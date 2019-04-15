@@ -35,7 +35,7 @@
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">软件所有发机版本</h2>
+                        <h2 class="text-success">软件所有发机版本</h2>
                         <hr>
 
                         <div class="col-md-4 pull-right" style="margin-right: 70px">
@@ -54,22 +54,28 @@
                         <div class="col-md-7">
                             <div class="thumbnail">
                                 <div class="caption">
-                                    <h2 class="row text-info" style="margin-top:30px">All versions of a piece of software</h2>
+                                    <h2 class="row text-success" style="margin-top:30px">All versions of a piece of software</h2>
                                     <hr class="center-pi" style="margin-top: 10px">
 
                                     <ul class="justify-content-center" th:each="version : ${versionReleaseList}">
                                         <li class="text-primary">
-                                            <a class="nav-link active text-primary" href="#" >
+                                            <a class="nav-link active text-success"
+                                               th:href="@{/versionDetailPage/}+${version.svId}">
                                                 [[${version.getSvVersionId()}]] <i>（Release）</i>
                                             </a>
 
-                                            <a class="nav-link active text-primary"
-                                               th:href="@{/downloadBetaVersionSoftware/}+${version.svLink}">
-                                                download
+                                            <a class="nav-link active text-success"
+                                               th:href="@{/downloadSoftware/}+${version.svId}">download
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
+                            </div>
+
+                            <div>
+                                <form method="get" th:action="@{/addReleaseVersionPage/}+${softId}">
+                                    <input type="submit" class="btn btn-success " value="增加新版本">
+                                </form>
                             </div>
                         </div>
 

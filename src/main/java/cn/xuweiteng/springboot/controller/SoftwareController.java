@@ -66,65 +66,100 @@ public class SoftwareController {
 
 
     /**
-     * 跳转到显示指定ID的所有  测试版本  软件页面
-     * @param id 指定的软件ID
-     * @param model 用于存储信息
-     * @return 显示版本列表页面
+     * 跳转到 增加软件界面
+     * @return 增加软件页面
      */
-    @GetMapping("/softwareBetaVersionListPage/{softId}")
-    public String toSoftwareBetaVersionListPage(@PathVariable("softId") Long id, Model model,
-                                                HttpSession session){
-        List<SoftwareVersions> versionBetaList = softwareService.selectAllVersionBetaIdByFkId(id);
-        List<Software> softwareList = softwareService.selectSoftwareById(id);//为了获取软件名字
+    @GetMapping("addSoftwarePage")
+    public String toAddSoftwarePage(){
+        return "background-software-add";
+    }
 
-        model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
-        model.addAttribute("softName", softwareList.get(0).getSoftName());
-        model.addAttribute("versionBetaList", versionBetaList);
+
+    /**
+     * 增加软件操作
+     * @param software 软件
+     * @return 软件列表页面
+     */
+    @PostMapping("addSoftware")
+    public String addSoftware(Software software){
+        System.out.println(software);
+        return "success";
+    }
+
+
+
+
+
+    /**
+     * 跳转到  软件(包括测试版本和发机版本)  详细信息界面
+     * @param svId 版本ID
+     * @param model 用于存储转发信息
+     * @return 软件详细信息界面
+     */
+    @GetMapping("versionDetailPage/{svId}")
+    public String toVersionDetail(@PathVariable("svId") Long svId,
+                                      HttpSession session,
+                                      Model model){
+        List<SoftwareVersions> versions = softwareService.selectVersionDetailBySvId(svId);
+        if(versions!=null && versions.size()>0){
+            model.addAttribute("version", versions.get(0));
+
+            List<Software> softwareList = softwareService.
+                    selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
+            model.addAttribute("softName", softwareList.get(0).getSoftName());
+
+        }
         if((Integer)session.getAttribute("role") == 0){
-            return "background-software-versions-beta";
+            return "background-software-version-details-update";
         }else if((Integer)session.getAttribute("role") == 1){
-            return "background-software-versions-beta-user";
+            return "background-software-version-details-user";
         }
         return null;
     }
 
 
     /**
-     * 显示指定ID的所有  发机版本  软件
-     * @param id 指定的软件ID
+     * 更新软件 版本(包括测试版本和发机版本)  详细信息
+     * @param svId 软件  测试版本ID
+     * @param softwareVersions 软件  测试版本  信息
      * @param model 用于存储信息
-     * @return 显示版本列表页面
+     * @return 更新成功后返回当前页面
      */
-    @GetMapping("/softwareReleaseVersionListPage/{softId}")
-    public String toSoftwareReleaseVersionListPage(@PathVariable("softId") Long id,
-                                                   HttpSession session,
-                                                   Model model){
-        List<SoftwareVersions> versionReleaseList = softwareService.selectAllVersionReleaseIdByFkId(id);
-        List<Software> softwareList = softwareService.selectSoftwareById(id);//为了获取软件名字
+    @PostMapping("/updateSoftwareDetail/{svId}")
+    public String updateSoftwareDetail(@PathVariable("svId") Long svId,
+                                          SoftwareVersions softwareVersions,
+                                          Model model){
+        softwareVersions.setSvId(svId);
+        int row = softwareService.updateSoftwareDetail(softwareVersions);
+        if(row > 0){
+            List<SoftwareVersions> versions = softwareService.selectVersionDetailBySvId(svId);
+            if(versions!=null && versions.size()>0){
+                model.addAttribute("version", versions.get(0));
 
-        model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
-        model.addAttribute("softName", softwareList.get(0).getSoftName());
-        model.addAttribute("versionReleaseList", versionReleaseList);
-        if((Integer)session.getAttribute("role") == 0){
-            return "background-software-versions-release";
-        }else if((Integer)session.getAttribute("role") == 1){
-            return "background-software-versions-release-user";
+                List<Software> softwareList = softwareService.
+                        selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
+                model.addAttribute("softName", softwareList.get(0).getSoftName());
+            }
+            return "background-software-version-details-update";
+        }else{
+            return "error";
         }
-        return null;
     }
 
 
+
     /**
-     * 下载测试版本软件
+     * 下载  软件(包括测试版本和发机版本)
      * @param response 响应信息
      * @return null(当前页面)
      * @throws Exception 文件不存在异常
      */
-    @GetMapping("/downloadBetaVersionSoftware/{svId}")
-    public String downLoadBetaVersionSoftware(@PathVariable("svId") Long svId,
+    @GetMapping("/downloadSoftware/{svId}")
+    public String downloadSoftware(@PathVariable("svId") Long svId,
                                               HttpServletResponse response) throws Exception{
 
-        String link = softwareService.selectVersionBetaBySvId(svId).get(0).getSvLink();
+        //获取下载链接
+        String link = softwareService.selectVersionDetailBySvId(svId).get(0).getSvLink();
         File file = new File(link);
         String fileName = file.getName();
         if(file.exists()){
@@ -153,67 +188,35 @@ public class SoftwareController {
         return null;
     }
 
+    /******************************测试版本***************************************/
 
     /**
-     * 跳转到软件详细信息界面
-     * @param svId 版本ID
-     * @param model 用于存储转发信息
-     * @return 软件详细信息界面
+     * 跳转到显示指定ID的所有  测试版本  软件页面
+     * @param id 指定的软件ID
+     * @param model 用于存储信息
+     * @return 显示版本列表页面
      */
-    @GetMapping("betaVersionDetailPage/{svId}")
-    public String toBetaVersionDetail(@PathVariable("svId") Long svId,
-                                      HttpSession session,
-                                      Model model){
-        List<SoftwareVersions> versions = softwareService.selectVersionBetaBySvId(svId);
-        if(versions!=null && versions.size()>0){
-            model.addAttribute("version", versions.get(0));
+    @GetMapping("/softwareBetaVersionListPage/{softId}")
+    public String toSoftwareBetaVersionListPage(@PathVariable("softId") Long id, Model model,
+                                                HttpSession session){
+        List<SoftwareVersions> versionBetaList = softwareService.selectAllVersionBetaIdByFkId(id);
+        List<Software> softwareList = softwareService.selectSoftwareById(id);//为了获取软件名字
 
-            List<Software> softwareList = softwareService.
-                    selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
-            model.addAttribute("softName", softwareList.get(0).getSoftName());
-
-        }
+        model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
+        model.addAttribute("softName", softwareList.get(0).getSoftName());
+        model.addAttribute("versionBetaList", versionBetaList);
         if((Integer)session.getAttribute("role") == 0){
-            return "background-software-version-details-update";
+            return "background-software-versions-beta";
         }else if((Integer)session.getAttribute("role") == 1){
-            return "background-software-version-details-user";
+            return "background-software-versions-beta-user";
         }
         return null;
     }
 
 
     /**
-     * 更新软件版本详细信息
-     * @param svId 软件版本ID
-     * @param softwareVersions 软件版本信息
-     * @param model 用于存储信息
-     * @return 更新成功后返回当前页面
-     */
-    @PostMapping("/updateBetaVersionDetail/{svId}")
-    public String updateBetaVersionDetail(@PathVariable("svId") Long svId,
-                                          SoftwareVersions softwareVersions,
-                                          Model model){
-        softwareVersions.setSvId(svId);
-        int row = softwareService.updateVersionBeta(softwareVersions);
-        if(row > 0){
-            List<SoftwareVersions> versions = softwareService.selectVersionBetaBySvId(svId);
-            if(versions!=null && versions.size()>0){
-                model.addAttribute("version", versions.get(0));
-
-                List<Software> softwareList = softwareService.
-                        selectSoftwareById(versions.get(0).getSoftVersionId());//为了获取软件名字
-                model.addAttribute("softName", softwareList.get(0).getSoftName());
-            }
-            return "background-software-version-details-update";
-        }else{
-            return "error";
-        }
-    }
-
-
-    /**
-     * 跳转到增加软件版本页面
-     * @return 增加软件版本页面
+     * 跳转到增加软件  测试版本  页面
+     * @return 增加软件  测试版本  页面
      */
     @GetMapping("/addBetaVersionPage/{softId}")
     public String toAddBetaVersionPage(@PathVariable("softId") Long softId, Model model){
@@ -223,12 +226,12 @@ public class SoftwareController {
 
 
     /**
-     * 增加软件版本，上传文件
+     * 增加软件  测试版本，上传文件
      * @param fileUpload 上传的软件对象
      * @param model 用于存储信息
-     * @param svVersionId 版本ID
-     * @param svInfo 版本信息
-     * @param softId 版本软件ID
+     * @param svVersionId   测试版本  ID
+     * @param svInfo   测试版本  信息
+     * @param softId   测试版本  软件ID
      * @return
      */
     @PostMapping("addBetaVersion/{softId}")
@@ -268,4 +271,93 @@ public class SoftwareController {
             return "error";
         }
     }
+
+
+
+    /******************************发机版本***************************************/
+
+
+    /**
+     * 显示指定ID的所有  发机版本  软件
+     * @param id 指定的软件ID
+     * @param model 用于存储信息
+     * @return 显示版本列表页面
+     */
+    @GetMapping("/softwareReleaseVersionListPage/{softId}")
+    public String toSoftwareReleaseVersionListPage(@PathVariable("softId") Long id,
+                                                   HttpSession session,
+                                                   Model model){
+        List<SoftwareVersions> versionReleaseList = softwareService.selectAllVersionReleaseIdByFkId(id);
+        List<Software> softwareList = softwareService.selectSoftwareById(id);//为了获取软件名字
+
+        model.addAttribute("softId", id);//软件ID，显示对应ID的所有版本
+        model.addAttribute("softName", softwareList.get(0).getSoftName());
+        model.addAttribute("versionReleaseList", versionReleaseList);
+        if((Integer)session.getAttribute("role") == 0){
+            return "background-software-versions-release";
+        }else if((Integer)session.getAttribute("role") == 1){
+            return "background-software-versions-release-user";
+        }
+        return null;
+    }
+
+
+    /**
+     * 跳转到增加软件  测试版本  页面
+     * @return 增加软件  测试版本  页面
+     */
+    @GetMapping("/addReleaseVersionPage/{softId}")
+    public String toAddReleaseVersionPage(@PathVariable("softId") Long softId, Model model){
+        model.addAttribute("softId", softId);
+        return "background-software-releaseVersion-details-add";
+    }
+
+
+    /**
+     * 增加软件  发机版本，上传文件
+     * @param fileUpload 上传的软件对象
+     * @param model 用于存储信息
+     * @param svVersionId   发机版本  ID
+     * @param svInfo   发机版本  信息
+     * @param softId   发机版本  软件ID
+     * @return
+     */
+    @PostMapping("addReleaseVersion/{softId}")
+    public String addReleaseVersion(MultipartFile fileUpload, Model model,
+                                 @RequestParam("svVersionId") String svVersionId,
+                                 @RequestParam("svInfo") String svInfo,
+                                 @PathVariable("softId") Long softId){
+        //获取文件名
+        String fileName = fileUpload.getOriginalFilename();
+
+        //指定本地文件夹存储文件
+        String filePath = "E:/";
+        try {
+            //将文件保存到指定路径中
+            fileUpload.transferTo(new File(filePath+fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        SoftwareVersions softwareVersion = new SoftwareVersions();
+        softwareVersion.setSvVersionId(svVersionId);
+        softwareVersion.setSvInfo(svInfo);
+        softwareVersion.setSvLink(filePath + fileName);
+        softwareVersion.setSoftVersionId(softId);
+
+        int row = softwareService.addReleaseVersion(softwareVersion);
+
+        if(row > 0){
+            List<SoftwareVersions> releaseVersionList = softwareService.selectAllVersionReleaseIdByFkId(softId);
+            List<Software> softwareList = softwareService.selectSoftwareById(softId);//为了获取软件名字
+
+            model.addAttribute("softId", softId);//软件ID，显示对应ID的所有版本
+            model.addAttribute("softName", softwareList.get(0).getSoftName());
+            model.addAttribute("versionReleaseList", releaseVersionList);
+            return "background-software-versions-release";
+        }else{
+            return "error";
+        }
+    }
+
 }

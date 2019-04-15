@@ -11,7 +11,6 @@
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
-
 </head>
 <body>
 <div class="wrapper">
@@ -35,52 +34,54 @@
                 <div class="padding">
                     <div class="full col-sm-9">
 
-                        <h2 class="text-primary">软件所有测试版本</h2>
+                        <h2 class="text-primary">增加软件</h2>
                         <hr>
+
 
                         <div class="col-md-4 pull-right" style="margin-right: 70px">
                             <div class="thumbnail">
-
                                 <div class="caption">
                                     <img th:src="@{/static/background/images/insignia.svg}" width="40" height="50">
                                     <span class="text-muted">
                                         SoftWare Name: <i>[[${softName}]]</i>
                                     </span>
                                 </div>
-
                             </div>
                         </div>
 
                         <div class="col-md-7">
-                            <div class="thumbnail">
-                                <div class="caption">
-                                    <h2 class="row text-info" style="margin-top:30px">All versions of a piece of software</h2>
-                                    <hr class="center-pi" style="margin-top: 10px">
 
-                                    <ul class="justify-content-center" th:each="version : ${versionBetaList}">
-                                        <li class="text-primary">
-                                            <a class="nav-link active text-primary"
-                                               th:href="@{/versionDetailPage/}+${version.svId}">
-                                                [[${version.getSvVersionId()}]] <i>（Beta），</i>
-                                            </a>
-                                            <a class="nav-link active text-primary"
-                                               th:href="@{/downloadSoftware/}+${version.svId}">
-                                                download
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <form role="form" method="post"  enctype="multipart/form-data" th:action="@{/addSoftware}">
+                                <label for="basic-addon1">软件名</label>
+                                <div class="input-group ">
+                                    <span class="input-group-addon" id="basic-addon1">@softName</span>
+                                    <input type="text" name="softName" class="form-control"
+                                           placeholder="softName" aria-describedby="basic-addon1" required>
                                 </div>
-                            </div>
 
-                            <div>
-                                <form method="get" th:action="@{/addBetaVersionPage/}+${softId}">
-                                    <input type="submit" class="btn btn-primary" value="增加新版本">
-                                </form>
-                            </div>
+                                <br>
+
+
+                                <label>软件功能信息</label>
+                                <div class="form-group">
+                                    <textarea name="softInfo" cols="30" rows="10" class="form-control" required></textarea>
+                                </div>
+
+                                <br>
+
+                                <label for="basic-addon2">上传日期</label>
+                                <div class="input-group ">
+                                    <span class="input-group-addon" id="basic-addon2">@upload date</span>
+                                    <input type="text" name="softName" class="form-control"
+                                           placeholder="yyyy-MM-dd hh:mm:ss" aria-describedby="basic-addon2" required>
+                                </div>
+
+                                <br>
+
+                                <input type="submit" class="btn btn-primary" value="确认添加">
+                            </form>
+
                         </div>
-
-
-
 
                         <!--footer-->
                         <div th:replace="~{background-footer.html::footer}"></div>
@@ -94,7 +95,8 @@
 </div>
 <!-- script references -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
-<script th:src="@{/static/background/js/scripts.js}"></script>
+<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+
 </body>
 </html>

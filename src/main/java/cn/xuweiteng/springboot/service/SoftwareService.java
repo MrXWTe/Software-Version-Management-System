@@ -54,11 +54,11 @@ public interface SoftwareService {
 
 
     /**
-     * 查找指定svId的版本
+     * 查找指定svId的版本信息
      * @param svId 指定id
      * @return 版本列表
      */
-    List<SoftwareVersions> selectVersionBetaBySvId(Long svId);
+    List<SoftwareVersions> selectVersionDetailBySvId(Long svId);
 
 
     /**
@@ -66,7 +66,7 @@ public interface SoftwareService {
      * @param softwareVersions 更新的信息
      * @return 改变的行数
      */
-    int updateVersionBeta(SoftwareVersions softwareVersions);
+    int updateSoftwareDetail(SoftwareVersions softwareVersions);
 
 
     /**
@@ -75,4 +75,12 @@ public interface SoftwareService {
      * @return 改变的行数
      */
     int addVersionBeta(SoftwareVersions softwareVersions);
+
+
+    /**
+     * 增加  发机版本  信息
+     * @param softwareVersions 增加的信息
+     * @return 改变的行数
+     */
+    int addReleaseVersion(SoftwareVersions softwareVersions);
 }
