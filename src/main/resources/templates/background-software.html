@@ -50,7 +50,10 @@
                                     <div class="panel-body">
                                         <div class="list-group">
                                             <a class="list-group-item">Information：[[${software.softInfo}]]</a>
-                                            <a class="list-group-item">Last Modified Date：[[${software.softLastmodifiedDate}]]</a>
+
+
+                                            <a class="list-group-item">Last Modified Date：[[${#dates.format(software.updateTime, 'yyyy-MM-dd')}]]</a>
+
                                             <!--<a class="list-group-item">Author：</a>-->
                                         </div>
                                     </div>

@@ -14,9 +14,9 @@ public class Software implements Serializable {
     private String softName;
     private String softInfo;
 
-    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd hh:mm:ss")
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
-    private Date softLastmodifiedDate;
+    @JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date updateTime;
 
 
     public Software() {
@@ -46,12 +46,12 @@ public class Software implements Serializable {
         this.softInfo = softInfo;
     }
 
-    public Date getSoftLastmodifiedDate() {
-        return softLastmodifiedDate;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setSoftLastmodifiedDate(Date softLastmodifiedDate) {
-        this.softLastmodifiedDate = softLastmodifiedDate;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class Software implements Serializable {
                 "softId=" + softId +
                 ", softName='" + softName + '\'' +
                 ", softInfo='" + softInfo + '\'' +
-                ", softLastmodifiedDate=" + softLastmodifiedDate +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

@@ -65,7 +65,10 @@
                                             </a>
                                             <a class="nav-link active text-primary"
                                                th:href="@{/downloadSoftware/}+${version.svId}">
-                                                download
+                                                download，
+                                            </a>
+                                            <a class="nav-link active text-primary" href="#">
+                                                [[${#dates.format(version.svDate, 'yyyy-MM-dd')}]]
                                             </a>
                                         </li>
                                     </ul>

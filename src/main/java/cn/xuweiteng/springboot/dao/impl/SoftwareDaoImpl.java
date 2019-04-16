@@ -29,8 +29,8 @@ public class SoftwareDaoImpl implements SoftwareDao {
     @Override
     public List<Software> selectAllSoftwares() {
         List<Software> softwareList = jdbcTemplate.query("select soft_name as softName, " +
-                        "soft_info as softInfo, soft_author as softAuthor, soft_last_modified_date as " +
-                        "softLastModifiedDate from tb_software",
+                        "soft_info as softInfo, soft_author as softAuthor, update_time as " +
+                        "updateTime from tb_software",
                 new BeanPropertyRowMapper<>(Software.class));
         return softwareList;
     }
@@ -54,8 +54,8 @@ public class SoftwareDaoImpl implements SoftwareDao {
         int startNum = (currentPage-1) * 4;
         int endPage = 4;
         String sql = "select soft_id as softId, soft_name as softName, " +
-                "soft_info as softInfo, soft_last_modified_date as " +
-                "softLastModifiedDate from tb_software limit " + startNum + ", " + endPage;
+                "soft_info as softInfo, update_time as " +
+                "updateTime from tb_software limit " + startNum + ", " + endPage;
 
         List<Software> softwareList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Software.class));
         return softwareList;
@@ -69,7 +69,7 @@ public class SoftwareDaoImpl implements SoftwareDao {
      */
     public List<Software> selectSoftwareById(Long id){
         String sql = "select soft_id as softId, soft_name as softName, soft_info as softInfo," +
-                "soft_last_modified_date as softLastModifiedDate from tb_software where soft_id=?";
+                "update_time as updateTime from tb_software where soft_id=?";
         List<Software> softwareList = jdbcTemplate.query(sql, new Object[] {id},
                 new BeanPropertyRowMapper<>(Software.class));
         return softwareList;
@@ -84,7 +84,9 @@ public class SoftwareDaoImpl implements SoftwareDao {
      */
     @Override
     public List<SoftwareVersions> selectAllVersionBetaIdByFkId(Long softVersionId) {
-        String sql = "select sv_id as svId, sv_versionId as svVersionId, sv_link as svLink from tb_version where soft_version_id=? and sv_version=?";
+        String sql = "select sv_id as svId, sv_info as svInfo, sv_versionId as svVersionId, " +
+                "sv_link as svLink, sv_date as svDate " +
+                "from tb_version where soft_version_id=? and sv_version=?";
         List<SoftwareVersions> versionList = jdbcTemplate.query(sql, new Object[]{softVersionId, 0},//0 代表测试版
                 new BeanPropertyRowMapper<>(SoftwareVersions.class));
         return versionList;
@@ -98,7 +100,8 @@ public class SoftwareDaoImpl implements SoftwareDao {
      */
     @Override
     public List<SoftwareVersions> selectAllVersionReleaseIdByFkId(Long softVersionId) {
-        String sql = "select sv_id as svId, sv_versionId as svVersionId, sv_link as svLink from tb_version " +
+        String sql = "select sv_id as svId, sv_info as svInfo, sv_versionId as svVersionId, " +
+                "sv_link as svLink, sv_date as svDate from tb_version " +
                 "where soft_version_id=? and sv_version=?";
 
         List<SoftwareVersions> versionList = jdbcTemplate.query(sql, new Object[]{softVersionId, 1}, //1 代表发机版
@@ -131,10 +134,10 @@ public class SoftwareDaoImpl implements SoftwareDao {
      */
     @Override
     public int updateSoftware(Software software) {
-        String sql = "update tb_software set soft_name=?, soft_info=?, soft_last_modified_date=?" +
+        String sql = "update tb_software set soft_name=?, soft_info=?, update_time=?" +
                 "where soft_id=?";
-        return jdbcTemplate.update(sql, new Object[] {software.getSoftName(), software.getSoftInfo(),
-                software.getSoftLastmodifiedDate(), software.getSoftId()});
+        return jdbcTemplate.update(sql, new Object[] {software.getSoftName(), software.getSoftInfo(), "now()",
+                software.getSoftId()});
     }
 
 
@@ -157,10 +160,10 @@ public class SoftwareDaoImpl implements SoftwareDao {
      * @return 改变的行数
      */
     public int addSoftware(Software software){
-        String sql = "insert into tb_software (soft_name, soft_info, soft_last_modified_date) " +
-                "values (?, ?, ?)";
+        String sql = "insert into tb_software (soft_name, soft_info, update_time) " +
+                "values (?, ?, now())";
         return jdbcTemplate.update(sql, new Object[] {software.getSoftName(),
-                software.getSoftInfo(), software.getSoftLastmodifiedDate()});
+                software.getSoftInfo()});
     }
 
 
@@ -171,8 +174,14 @@ public class SoftwareDaoImpl implements SoftwareDao {
      */
     @Override
     public int addVersionBeta(SoftwareVersions softwareVersions) {
+
+        /*每次添加软件的新版本，则更新该软件的  最后修改时间---update_time*/
+        String sqlOther = "update tb_software set update_time=now()";
+        jdbcTemplate.update(sqlOther);
+
+
         String sql = "insert into tb_version (sv_info, sv_link, soft_version_id, " +
-                "sv_versionId, sv_version) values (?, ?, ?, ?, ?)";
+                "sv_versionId, sv_version, sv_date) values (?, ?, ?, ?, ?, now())";
         return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
                 softwareVersions.getSvLink(),
                 softwareVersions.getSoftVersionId(),
@@ -188,8 +197,14 @@ public class SoftwareDaoImpl implements SoftwareDao {
      */
     @Override
     public int addReleaseVersion(SoftwareVersions softwareVersions) {
+
+        /*每次添加软件的新版本，则更新该软件的  最后修改时间---update_time*/
+        String sqlOther = "update tb_software set update_time=now()";
+        jdbcTemplate.update(sqlOther);
+
+
         String sql = "insert into tb_version (sv_info, sv_link, soft_version_id, " +
-                "sv_versionId, sv_version) values (?, ?, ?, ?, ?)";
+                "sv_versionId, sv_version, sv_date) values (?, ?, ?, ?, ?, now())";
         return jdbcTemplate.update(sql, new Object[] {softwareVersions.getSvInfo(),
                 softwareVersions.getSvLink(),
                 softwareVersions.getSoftVersionId(),

@@ -1,5 +1,7 @@
 package cn.xuweiteng.springboot.pojo;
 
+import java.util.Date;
+
 public class SoftwareVersions {
 
     public SoftwareVersions() {
@@ -11,6 +13,7 @@ public class SoftwareVersions {
     private Long softVersionId;
     private String svVersionId;
     private Long svVersion;
+    private Date svDate;
 
     public Long getSvId() {
         return svId;
@@ -60,6 +63,13 @@ public class SoftwareVersions {
         this.svVersion = svVersion;
     }
 
+    public Date getSvDate() {
+        return svDate;
+    }
+
+    public void setSvDate(Date svDate) {
+        this.svDate = svDate;
+    }
 
     @Override
     public String toString() {
@@ -70,6 +80,7 @@ public class SoftwareVersions {
                 ", softVersionId=" + softVersionId +
                 ", svVersionId='" + svVersionId + '\'' +
                 ", svVersion=" + svVersion +
+                ", svDate=" + svDate +
                 '}';
     }
 }
