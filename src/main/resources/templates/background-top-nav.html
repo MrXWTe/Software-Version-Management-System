@@ -28,6 +28,8 @@
     <a class="navbar-brand logo">GZ</a>
 </div>
 <nav class="collapse navbar-collapse" role="navigation">
+
+    <!--搜索框-->
     <form class="navbar-form navbar-left" th:if="${1==0}">
         <div class="input-group input-group-sm" style="max-width:360px;">
             <input type="text" class="form-control" placeholder="Search" name="srch-term"
@@ -43,12 +45,14 @@
         <li>
             <a th:href="@{/background-admin.html}"><i class="glyphicon glyphicon-home"></i> Home</a>
         </li>
+
         <li th:if="${softId != null}">
             <a th:href="@{/softwareBetaVersionListPage/}+${softId}">
                 <i class="glyphicon glyphicon-edit"></i>&nbsp;
                 <span class="badge"> Beta</span>
             </a>
         </li>
+
         <li th:if="${softId != null}">
             <a th:href="@{/softwareReleaseVersionListPage/}+${softId}">
                 <i class="glyphicon glyphicon-check"></i>&nbsp;
@@ -80,8 +84,7 @@
         </li>
 
         <li>
-            <a th:href="@{/logout}" class="dropdown-toggle" data-toggle="dropdown">退出登录
-            </a>
+            <a th:href="@{/logout}" class="dropdown-toggle" data-toggle="dropdown">退出登录</a>
         </li>
     </ul>
 </nav>
@@ -91,7 +94,7 @@
 
 <!-- script references -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="js/bootstrap.min.js" th:src="@{/static/background/js/bootstrap.min.js}"></script>
-<script src="js/scripts.js" th:src="@{/static/background/js/scripts.js}"></script>
+<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/background/js/scripts.js}"></script>
 </body>
 </html>

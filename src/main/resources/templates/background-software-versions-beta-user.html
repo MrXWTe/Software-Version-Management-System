@@ -59,16 +59,16 @@
 
                                     <ul class="justify-content-center" th:each="version : ${versionBetaList}">
                                         <li class="text-primary">
-                                            <a class="nav-link active text-primary"
+                                            <a class="nav-link active text-primary" th:title="${version.svInfo}"
                                                th:href="@{/versionDetailPage/}+${version.svId}">
                                                 [[${version.getSvVersionId()}]] <i>（Beta），</i>
                                             </a>
                                             <a class="nav-link active text-primary"
                                                th:href="@{/downloadSoftware/}+${version.svId}">
-                                                download，
+                                                download；
                                             </a>
                                             <a class="nav-link active text-primary" href="#">
-                                                [[${#dates.format(version.svDate, 'yyyy-MM-dd')}]]
+                                                上传时间：[[${#dates.format(version.svDate, 'yyyy-MM-dd')}]]
                                             </a>
                                         </li>
                                     </ul>

@@ -88,9 +88,9 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public int addUser(User user) {
-        String sql = "insert into tb_user (user_name, user_email, user_password,user_enroll_date, user_status) values (?, ?, ?, ?, ?)";
+        String sql = "insert into tb_user (user_name, user_email, user_password,user_enroll_date, user_status) values (?, ?, ?, now(), ?)";
         return jdbcTemplate.update(sql, new Object[] {user.getUserName(), user.getUserEmail(),
-                "123456",  user.getUserEnrollDate(), user.isUserStatus()});
+                "123456", user.isUserStatus()});
     }
 
 
@@ -101,10 +101,10 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public int updateUser(User user) {
-        String sql = "update tb_user set user_name=?, user_email=?, user_enroll_date=?, user_status=?" +
+        String sql = "update tb_user set user_name=?, user_email=?, user_status=?" +
                 " where user_id=?";
         return jdbcTemplate.update(sql, new Object[] {user.getUserName(), user.getUserEmail(),
-                user.getUserEnrollDate(), user.isUserStatus(), user.getUserId()});
+                user.isUserStatus(), user.getUserId()});
     }
 
 }

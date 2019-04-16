@@ -209,7 +209,18 @@ select soft_name as softName, soft_info as softInfo, soft_author as softAuthor, 
   alter table table_name modify column column_name datetime not null;
   ```
 
-- 
+- 删除表中所有记录后，ID从1开始记录
+
+  ```mysql
+  # 方法一
+  TRUNCATE TABLE '表名'
+  
+  # 方法二
+  delete from '表名' where 1=1;
+  alter table '表名' auto_increment = 1;
+  ```
+
+  
 
 
 

@@ -58,18 +58,18 @@
                                     <hr class="center-pi" style="margin-top: 10px">
 
                                     <ul class="justify-content-center" th:each="version : ${versionReleaseList}">
-                                        <li class="text-primary">
+                                        <li class="text-success">
                                             <a class="nav-link active text-success" th:title="${version.svInfo}"
                                                th:href="@{/versionDetailPage/}+${version.svId}">
                                                 [[${version.getSvVersionId()}]] <i>（Release）</i>，
                                             </a>
 
                                             <a class="nav-link active text-success"
-                                               th:href="@{/downloadSoftware/}+${version.svId}">download，
+                                               th:href="@{/downloadSoftware/}+${version.svId}">download；
                                             </a>
 
                                             <a class="nav-link active text-success" href="#">
-                                                [[${#dates.format(version.svDate, 'yyyy-MM-dd')}]]
+                                                上传时间：[[${#dates.format(version.svDate, 'yyyy-MM-dd')}]]
                                             </a>
                                         </li>
                                     </ul>

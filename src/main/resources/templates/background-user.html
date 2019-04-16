@@ -9,22 +9,28 @@
     <link th:href="@{/static/background/css/bootstrap.background.css}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
-    <![endif]-->
+    <!--<![endif]-->
     <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.css">
+
 </head>
 <body>
 
 <div class="wrapper">
     <div class="box">
         <div class="row">
+
             <!--sidebar-->
-            <div th:replace="~{background-side-bar::side-bar}"></div><!--sidebar-->
+            <div th:replace="~{background-side-bar::side-bar}"></div>
+            <!--sidebar-->
+
             <!-- main right col -->
+
             <div class="column col-sm-10 col-xs-11" id="main">
+
                 <!--top-nav-->
-                <div th:replace="~{background-top-nav::top-nav}"></div><!--top-nav-->
+                <div th:replace="~{background-top-nav::top-nav}"></div>
+                <!--top-nav-->
+
                 <div class="padding">
                     <div class="full col-sm-9">
 
@@ -52,7 +58,7 @@
                                 <td th:text="${user.userId}"></td>
                                 <td th:text="${user.userName}"></td>
                                 <td th:text="${user.userEmail}"></td>
-                                <td th:text="${user.userEnrollDate}"></td>
+                                <td th:text="${#dates.format(user.userEnrollDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${user.userStatus}"></td>
                                 <td>
                                     <a type="button" th:href="@{/updateUserPage/}+${user.userId}"

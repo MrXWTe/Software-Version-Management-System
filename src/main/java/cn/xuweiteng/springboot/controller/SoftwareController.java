@@ -317,7 +317,7 @@ public class SoftwareController {
         String fileName = fileUpload.getOriginalFilename();
 
         //指定本地文件夹存储文件
-        String filePath = "E:/";
+        String filePath = "E:/software/beta/";
         try {
             //将文件保存到指定路径中
             fileUpload.transferTo(new File(filePath+fileName));
@@ -405,7 +405,7 @@ public class SoftwareController {
         String fileName = fileUpload.getOriginalFilename();
 
         //指定本地文件夹存储文件
-        String filePath = "E:/";
+        String filePath = "E:/software/release/";
         try {
             //将文件保存到指定路径中
             fileUpload.transferTo(new File(filePath+fileName));
