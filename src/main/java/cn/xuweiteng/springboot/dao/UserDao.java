@@ -53,4 +53,12 @@ public interface UserDao {
      */
     int updateUser(User user);
 
+
+    /**
+     * 更新用户密码
+     * @param user 用户
+     * @return 改变的行数
+     */
+    int updatePassword(User user);
+
 }

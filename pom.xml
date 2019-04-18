@@ -36,6 +36,13 @@
         </dependency>
 
 
+        <!--日志模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
+
         <!--thymeleaf模板引擎模块-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

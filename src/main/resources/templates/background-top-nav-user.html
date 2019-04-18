@@ -43,6 +43,14 @@
         <li>
             <a th:href="@{/background-user-info.html}"><i class="glyphicon glyphicon-home"></i> Home</a>
         </li>
+
+        <li>
+            <a th:href="@{/updatePasswordPage}">
+                <i class="glyphicon glyphicon-edit"></i>&nbsp;
+                <span class="badge"> modify password</span>
+            </a>
+        </li>
+
         <li th:if="${softId != null}">
             <a th:href="@{/softwareBetaVersionListPage/}+${softId}">
                 <i class="glyphicon glyphicon-edit"></i>&nbsp;

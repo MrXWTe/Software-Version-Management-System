@@ -83,5 +83,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
+    /**
+     * 更新用户密码
+     * @param user 用户
+     * @return 改变的行数
+     */
+    @Override
+    public int updatePassword(User user) {
+        return userDao.updatePassword(user);
+    }
 }

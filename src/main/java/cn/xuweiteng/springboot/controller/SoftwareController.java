@@ -1,9 +1,13 @@
 package cn.xuweiteng.springboot.controller;
 
+import cn.xuweiteng.springboot.pojo.Administrator;
 import cn.xuweiteng.springboot.pojo.Software;
 import cn.xuweiteng.springboot.pojo.SoftwareVersions;
+import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.AdminService;
 import cn.xuweiteng.springboot.service.SoftwareService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @Controller
@@ -31,6 +36,9 @@ public class SoftwareController {
         this.softwareService = softwareService;
     }
 
+
+    // 日志对象，用于输出日志文件
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 跳转到展示软件列表页面
@@ -230,7 +238,16 @@ public class SoftwareController {
      */
     @GetMapping("/downloadSoftware/{svId}")
     public String downloadSoftware(@PathVariable("svId") Long svId,
-                                              HttpServletResponse response) throws Exception{
+                                   HttpServletResponse response,
+                                   HttpSession session) throws Exception{
+
+        //获取登陆者姓名，用于写入日志文件中
+        String name = "";
+        Administrator admin = (Administrator) session.getAttribute("admin");
+        User user = (User) session.getAttribute("user");
+        if(admin!=null) name = admin.getAdmin_name();
+        else if(user != null) name = user.getUserName();
+
 
         //获取下载链接
         String link = softwareService.selectVersionDetailBySvId(svId).get(0).getSvLink();
@@ -253,12 +270,14 @@ public class SoftwareController {
                     os.write(buffer, 0, i);
                     i = bis.read(buffer);
                 }
-                System.out.println("Download the song successfully!");
             }
             catch (Exception e) {
-                System.out.println("Download the song failed!");
+
             }
         }
+
+
+        logger.info(name + " --- download the " + fileName + '\n');
         return null;
     }
 
@@ -312,7 +331,14 @@ public class SoftwareController {
     public String addBetaVersion(MultipartFile fileUpload, Model model,
                                  @RequestParam("svVersionId") String svVersionId,
                                  @RequestParam("svInfo") String svInfo,
-                                 @PathVariable("softId") Long softId){
+                                 @PathVariable("softId") Long softId,
+                                 HttpSession session){
+
+        //获取管理员姓名，便于写入日志
+        Administrator admin = (Administrator) session.getAttribute("admin");
+        String name = admin.getAdmin_name();
+
+
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
 
@@ -340,6 +366,9 @@ public class SoftwareController {
             model.addAttribute("softId", softId);//软件ID，显示对应ID的所有版本
             model.addAttribute("softName", softwareList.get(0).getSoftName());
             model.addAttribute("versionBetaList", versionBetaList);
+
+            logger.info(name + " --- upload the " + fileName + "（beta）" + '\n');
+
             return "background-software-versions-beta";
         }else{
             return "error";
@@ -398,9 +427,16 @@ public class SoftwareController {
      */
     @PostMapping("addReleaseVersion/{softId}")
     public String addReleaseVersion(MultipartFile fileUpload, Model model,
-                                 @RequestParam("svVersionId") String svVersionId,
-                                 @RequestParam("svInfo") String svInfo,
-                                 @PathVariable("softId") Long softId){
+                                    @RequestParam("svVersionId") String svVersionId,
+                                    @RequestParam("svInfo") String svInfo,
+                                    @PathVariable("softId") Long softId,
+                                    HttpSession session){
+
+        //获取管理员姓名，便于写入日志
+        Administrator admin = (Administrator) session.getAttribute("admin");
+        String name = admin.getAdmin_name();
+
+
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
 
@@ -428,6 +464,9 @@ public class SoftwareController {
             model.addAttribute("softId", softId);//软件ID，显示对应ID的所有版本
             model.addAttribute("softName", softwareList.get(0).getSoftName());
             model.addAttribute("versionReleaseList", releaseVersionList);
+
+            logger.info(name + " --- upload the " + fileName + "（release）" + '\n');
+
             return "background-software-versions-release";
         }else{
             return "error";

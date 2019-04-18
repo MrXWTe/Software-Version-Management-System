@@ -46,12 +46,19 @@ public interface UserService {
     int addUser(User user);
 
 
-
     /**
      * 更新用户
      * @param user 更新的用户
      * @return 改变的行数
      */
     int updateUser(User user);
+
+
+    /**
+     * 更新用户密码
+     * @param user 用户
+     * @return 改变的行数
+     */
+    int updatePassword(User user);
 
 }

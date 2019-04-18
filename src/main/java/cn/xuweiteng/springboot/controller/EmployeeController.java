@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -70,7 +71,7 @@ public class EmployeeController {
      * @return 编辑页面
      */
     @GetMapping("/updateUserPage/{userId}")
-    public String updateUserPage(@PathVariable("userId") Long userId, Model model){
+    public String toUpdateUserPage(@PathVariable("userId") Long userId, Model model){
         User user = userService.selectUserById(userId);
         model.addAttribute("user", user);
         return "background-user-update";
@@ -96,6 +97,28 @@ public class EmployeeController {
             return "error";
         }
     }
+
+
+    @GetMapping("/updatePasswordPage")
+    public String toUpdateUserPasswordPage(){
+        return "background-user-update-password";
+    }
+
+
+    @PostMapping("/updatePassword/{userId}")
+    public String updatePassword(@PathVariable("userId") Long userId,
+                                 User user,
+                                 Model model){
+        user.setUserId(userId);
+        int row = userService.updatePassword(user);
+        if(row > 0){
+            model.addAttribute("updatePassword", "更新成功");
+            return "background-user-update-password";
+        }else{
+            return "error";
+        }
+    }
+
 
 
     /**
