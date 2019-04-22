@@ -58,6 +58,15 @@
         </dependency>
 
 
+        <!--数据源-->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.16</version>
+        </dependency>
+
+
         <!--jdbc驱动，使用jdbcTemplate-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
