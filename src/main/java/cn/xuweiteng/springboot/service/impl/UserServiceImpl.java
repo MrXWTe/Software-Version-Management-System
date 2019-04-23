@@ -5,10 +5,13 @@ import cn.xuweiteng.springboot.pojo.User;
 import cn.xuweiteng.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+
 @Service("userService")
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
@@ -18,13 +21,20 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
+
     /**
      * 查询所有员工
      * @return 员工列表
      */
     @Override
     public List<User> selectAllUser() {
-        return userDao.selectAllUser();
+        List<User> list;
+        try{
+            list = userDao.selectAllUser();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 
 
@@ -35,7 +45,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User selectUserById(Long userId) {
-        return userDao.selectUserById(userId);
+        User user;
+        try{
+            user = userDao.selectUserById(userId);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return user;
     }
 
 
@@ -47,8 +63,15 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User selectAdminByEmailAndPassword(String userEmail, String userPassword) {
-        return userDao.selectAdminByEmailAndPassword(userEmail, userPassword);
+        User user;
+        try{
+            user = userDao.selectAdminByEmailAndPassword(userEmail, userPassword);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return user;
     }
+
 
     /**
      * 根据ID删除用户
@@ -57,7 +80,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int deleteUserById(Long userId) {
-        return userDao.deleteUserById(userId);
+        int row;
+        try{
+            row = userDao.deleteUserById(userId);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return row;
     }
 
 
@@ -68,7 +97,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int addUser(User user) {
-        return userDao.addUser(user);
+        int row;
+        try{
+            row = userDao.addUser(user);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return row;
     }
 
 
@@ -79,7 +114,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int updateUser(User user) {
-        return userDao.updateUser(user);
+        int row;
+        try{
+            row = userDao.updateUser(user);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return row;
     }
 
 
@@ -90,6 +131,12 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public int updatePassword(User user) {
-        return userDao.updatePassword(user);
+        int row;
+        try{
+            row = userDao.updatePassword(user);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return row;
     }
 }
