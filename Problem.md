@@ -352,6 +352,10 @@ private Date time;
 
 
 
+***
+
+
+
 ## 11、自动配置注解`@AutoWired`问题
 
 在之前下我使用`@Autowired`都是直接在需要注入的变量上直接注解，因为这种方式简单快捷，不用考虑太多。
@@ -394,6 +398,127 @@ private final LoginService loginService;
 @Autowired
 public LoginController(LoginService loginService){
     this.loginService = loginService;
+}
+```
+
+
+
+***
+
+
+
+## 12、集成druid数据源
+
+Druid连接池是阿里巴巴开源的数据库连接池项目。Druid连接池为监控而生，内置强大的监控功能，监控特性不影响性能。功能强大，能防SQL注入，内置Loging能诊断Hack应用行为。详细请见：<https://github.com/alibaba/druid>
+
+
+
+spring boot集成druid可以对数据库访问进行监视，主要分为以下几步
+
+#### 1）、pom.xml添加依赖
+
+要使用druid数据源，必须添加MySQL依赖、druid依赖、jdbc依赖或mybatis依赖
+
+```xml
+<!--数据库驱动-->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.11</version>
+</dependency>
+
+<!--数据源-->
+<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>druid</artifactId>
+    <version>1.1.16</version>
+</dependency>
+
+<!--jdbc驱动，使用jdbcTemplate-->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+```
+
+#### 2）、配置数据库信息
+
+在yml文件中进行配置数据库信息
+
+**注意：在未进行其他修改的情况下，该yml文件一定一定要命名为  `application.yml`，不然spring无法找到该文件，并且会报错误信息“`url not set`”**
+
+```yaml
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/gz_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    #   数据源其他配置
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall
+    maxPoolPreparedStatementPerConnectionSize: 20
+    useGlobalDataSourceStat: true
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+```
+
+#### 3）、配置类
+
+因为druid具有监视功能，因此需要配置一个Servlet进行监视页面的访问，还需要配置过滤器进行网页的过滤
+
+```java
+@Configuration
+public class DruidConfig {
+    //配置数据源为druid
+    @ConfigurationProperties(prefix = "spring.datasource")
+    @Bean
+    public DataSource druid(){
+        return new DruidDataSource();
+    }
+
+    //配置servlet， 用于登录监视器
+    @Bean
+    public ServletRegistrationBean statViewServlet(){
+        ServletRegistrationBean bean =
+                new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
+
+        Map<String, String> initParams = new HashMap<>();
+        initParams.put("loginUsername", "admin");
+        initParams.put("loginPassword", "123456");
+        initParams.put("allow", "");
+        initParams.put("deny", "192.168.15.21");
+
+        bean.setInitParameters(initParams);
+        return bean;
+    }
+
+    //配置过滤器
+    @Bean
+    public FilterRegistrationBean webStatFilter(){
+        FilterRegistrationBean filter = new FilterRegistrationBean();
+        filter.setFilter(new WebStatFilter());
+
+        Map<String, String> initParams = new HashMap<>();
+        initParams.put("exclusions","*.js,*.css,/druid/*");
+
+        filter.setInitParameters(initParams);
+        filter.setUrlPatterns(Arrays.asList("/*"));
+        return filter;
+    }
 }
 ```
 

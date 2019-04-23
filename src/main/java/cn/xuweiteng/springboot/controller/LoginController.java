@@ -38,15 +38,29 @@ public class LoginController {
     @PostMapping(value = "/adminLogin")
     public String adminLogin(@RequestParam("admin_email") String admin_email,
                              @RequestParam("admin_password") String admin_password,
-                             Map<String, Object> map, HttpSession session){
+                             Map<String, Object> map,
+                             HttpSession session)
+    {
+
+        // 判断用户是否已经登录
+        Administrator adminLogged = (Administrator) session.getAttribute("admin");
+        if (adminLogged != null) {
+            // 用户已经登录
+            map.put("adminErrorMessage", "用户已经登录，检查用户名是否正确");
+            return "login.html";
+        }
+
+        // 判断用户名密码是否正确
         Administrator admin = adminService.selectAdminByEmailAndPassword(admin_email, admin_password);
         boolean flag = (admin != null);
         if(flag) {
+            // 正确
             session.setAttribute("admin", admin);
             session.setAttribute("role", 0);
             return "redirect:/background-admin.html";
         }
         else {
+            // 不正确
             map.put("adminErrorMessage", "用户名密码错误");
             return "login.html";
         }
@@ -64,14 +78,27 @@ public class LoginController {
     @PostMapping(value = "/employeeLogin")
     public String employeeLogin(@RequestParam("employeeEmail") String user_email,
                                 @RequestParam("employeePassword") String user_password,
-                                Map<String, Object> map, HttpSession session){
+                                Map<String, Object> map,
+                                HttpSession session)
+    {
+        // 判断用户是否登录
+        User userLogged = (User)session.getAttribute("user");
+        if(userLogged != null){
+            // 已经登录
+            map.put("employeeErrorMessage", "用户已经登录，检查用户名是否正确");
+            return "login.html";
+        }
+
+        // 判断用户名密码是否正确
         User user = userService.selectAdminByEmailAndPassword(user_email, user_password);
         boolean flag = (user != null);
-        if(flag) {
+        // 正确
+        if(flag){
             session.setAttribute("user", user);
             session.setAttribute("role", 1);
             return "redirect:/background-user-info.html";
         }
+        // 不正确
         else {
             map.put("employeeErrorMessage", "用户名密码错误");
             return "login.html";
