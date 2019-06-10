@@ -522,3 +522,46 @@ public class DruidConfig {
 }
 ```
 
+
+
+## 13、事务管理
+
+在spring boot中开启事务管理只需在启动类中加上`@EnableTransactionManagement`即可
+
+```java
+@SpringBootApplication
+@EnableTransactionManagement	// 加上此注解即可开启事务管理
+public class SpringbootApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SpringbootApplication.class, args);
+    }
+}
+```
+
+然后在service层中合适的方法上添加`@Transactional`注解，或者可以直接在类上添加该注解，则该类中所有public方法都配置了事务信息
+
+```java
+@Service("adminService")
+@Transactional(rollbackFor = Exception.class)
+public class AdminServiceImpl implements AdminService {
+    @Override
+    public Administrator selectAdminByEmailAndPassword(
+        	String admin_email, String admin_password) {
+        Administrator admin;
+        try{
+            admin = adminDao.selectAdminByEmailAndPassword(admin_email, admin_password);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return admin;
+    }
+}
+```
+
+配置事务时有几点需要注意
+
+- MySQL使用的引擎必须支持事务，比如InnoDB
+- `@Transactional`注解必须配置在public方法上，否则无效
+- 方法加上了注解，然而方法体没有抛出异常，则事务配置失败
+- 抛出异常时一定要抛出运行时异常`RuntimeException`或者`Error`，否则事务失效
+  - 解决方法：@Transactional(rollbackFor = Exception.class)

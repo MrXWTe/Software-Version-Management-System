@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>软件版本管理</title>
+    <meta name="generator" content="Bootply"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link th:href="@{/static/background/css/bootstrap.background.css}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link th:href="@{/static/background/css/styles.css}" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="box">
+        <div class="row">
+
+            <!--sidebar-->
+            <div th:replace="~{background-side-bar::side-bar}"></div>
+            <!--sidebar-->
+
+            <!-- main right col -->
+            <div class="column col-md-10 col-xs-11" id="main">
+
+                <!--top-nav-->
+                <div th:replace="~{background-top-nav::top-nav}"></div>
+                <!--top-nav-->
+
+                <div class="padding">
+                    <div class="full col-sm-9">
+
+                        <h2 class="text-primary">生成加密文件</h2>
+                        <hr>
+
+                        <form method="post" enctype="multipart/form-data" th:action="@{/generateFile}">
+
+                            <label>加载文件</label>
+                            <input type="file" name="fileUpload" required>
+
+                            <br>
+
+                            <!--<label for="basic-addon0">文件路径</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon" id="basic-addon0">@filepath</span>
+                                <input type="text" class="form-control" name="filepath"
+                                       placeholder="C:/filepath" aria-describedby="basic-addon0" required>
+                            </div>-->
+
+                            <br>
+
+                            <label for="basic-addon1">允许使用次数</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon" id="basic-addon1">@times</span>
+                                <input type="text" class="form-control" name="times"
+                                       placeholder="12、23 or 33" aria-describedby="basic-addon1" required>
+                            </div>
+
+                            <br>
+
+                            <label for="basic-addon2">输入指令</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon2">@order</span>
+                                <input type="text"  class="form-control" name="order"
+                                       placeholder="A4、AVF12 or D2" aria-describedby="basic-addon2" required>
+                            </div>
+
+                            <br>
+                            <input type="submit" class="btn btn-primary" value="生成文件">
+                        </form>
+
+                    </div>
+
+                    <!--footer-->
+                    <div th:replace="~{background-footer.html::footer}"></div>
+
+                </div>
+            </div><!-- /main -->
+        </div>
+    </div>
+</div>
+<!-- script references -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script th:src="@{/static/background/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/background/js/scripts.js}"></script>
+</body>
+</html>
