@@ -2,15 +2,17 @@ package cn.xuweiteng.springboot.controller;
 
 import cn.xuweiteng.springboot.service.GenerateFile;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -29,6 +31,7 @@ public class EncryptedFileController {
     }
 
     @PostMapping("/generateFile")
+    @ResponseBody
     public String generateFile(MultipartFile fileUpload,
                                @RequestParam("times") String times,
                                @RequestParam("order") String order,
@@ -121,7 +124,7 @@ public class EncryptedFileController {
         response.setContentType("application/octet-stream");
         // 下载文件能正常显示中文
         response.setHeader("Content-Disposition", "attachment;filename="
-                + URLEncoder.encode(modleNumber+".txt", "UTF-8"));
+                + URLEncoder.encode(modleNumber+".gzsd", "UTF-8"));
 
         try(OutputStream os = response.getOutputStream()){
             os.write(textTencry.getBytes(), 0, textTencry.getBytes().length);
@@ -130,6 +133,6 @@ public class EncryptedFileController {
         }
 
 
-        return "success";
+        return "null";
     }
 }
